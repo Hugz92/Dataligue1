@@ -3,251 +3,259 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Inscription – Data Ligue 1</title>
-  <meta name="theme-color" content="#0C67F6">
-
-  <!-- Favicons -->
-  <link rel="icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <title>DATA LIGUE 1 – Inscription</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+  <meta name="theme-color" content="#0c67f6" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EXC0P38K5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-7EXC0P38K5');
   </script>
 
-  <!-- Style page hôte -->
+  <!-- Styles wrapper (cadre + responsive) -->
   <style>
-    :root{ --brand:#0C67F6; }
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: var(--brand);
+    :root { --blue:#0c67f6; --white:#fff; }
+    html,body{margin:0;padding:0;background:var(--blue);font-family:Helvetica,Arial,sans-serif}
+    .shell{max-width:980px;margin:48px auto;color:#fff;padding:0 16px}
+    h1{font-weight:800;text-align:center;margin:0 0 24px}
+    .frame{
+      background:#fff1; border:12px solid #fff; border-radius:18px;
+      box-shadow:0 12px 40px rgba(0,0,0,.25); padding:24px;
     }
-    .wrap{
-      max-width: 940px;
-      margin: clamp(16px,4vw,40px) auto;
-      padding: clamp(12px,3vw,24px);
-    }
-    .card{
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.12);
-      padding: clamp(16px,4vw,28px);
-    }
-    .brand-title{
-      color:#fff;
-      margin:0 0 12px;
-      font-weight: 700;
-      letter-spacing:.2px;
-      text-align:center;
-    }
-    /* Rend le formulaire Brevo plus fluide dans la carte */
-    #sib-container{ border-radius: 12px !important; }
+    .inner{background:#fff;border-radius:8px;padding:18px}
+    @media(min-width:820px){ .inner{padding:28px} }
   </style>
 
-  <!-- === Brevo conseille de placer ces styles/links dans le <head> === -->
+  <!-- ====== Brevo assets (conservés) ====== -->
   <style>
-    @font-face{
-      font-display:block; font-family:Roboto;
-      src:url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"),
-          url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
-    }
-    @font-face{
-      font-display:fallback; font-family:Roboto; font-weight:600;
-      src:url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"),
-          url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")
-    }
-    @font-face{
-      font-display:fallback; font-family:Roboto; font-weight:700;
-      src:url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"),
-          url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")
-    }
-    #sib-container input::placeholder,
-    #sib-container textarea::placeholder{
-      text-align:left; font-family:Helvetica, sans-serif; color:#c0ccda;
-    }
-    #sib-container a{ text-decoration:underline; color:#2BB2FC; }
+    @font-face{font-display:block;font-family:Roboto;src:url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")}
+    @font-face{font-display:fallback;font-family:Roboto;font-weight:600;src:url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/6e9caeeafb1f3491be3e32744bc30440.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/medium/normal/71501f0d8d5aa95960f6475d5487d4c2.woff) format("woff")}
+    @font-face{font-display:fallback;font-family:Roboto;font-weight:700;src:url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/3ef7cf158f310cf752d5ad08cd0e7e60.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/bold/normal/ece3a1d82f18b60bcce0211725c476aa.woff) format("woff")}
+    #sib-container input::placeholder, #sib-container textarea::placeholder {text-align:left;font-family:Helvetica,sans-serif;color:#c0ccda}
+    #sib-container a{text-decoration:underline;color:#2BB2FC}
   </style>
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 </head>
+
 <body>
-  <div class="wrap">
-    <h1 class="brand-title">DATA LIGUE 1 – Inscription</h1>
-    <div class="card">
+  <div class="shell">
+    <h1>DATA LIGUE 1 – Inscription</h1>
+    <div class="frame">
+      <div class="inner">
+        <!-- ====== TON FORMULAIRE BREVO (COMPLET) ====== -->
+        <div class="sib-form" style="text-align:center;background-color:#0c67f6;">
+          <div id="sib-form-container" class="sib-form-container">
 
-      <!-- ====== EMBED BREV0 (tel que tu me l'as fourni) ====== -->
-      <div class="sib-form" style="text-align:center;background-color:#0c67f6;">
-        <div id="sib-form-container" class="sib-form-container">
-
-          <div id="error-message" class="sib-form-message-panel"
-               style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;">
-            <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-              <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
-                <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z" />
-              </svg>
-              <span class="sib-form-message-panel__inner-text">
-                Nous n&#039;avons pas pu confirmer votre inscription.
-              </span>
-            </div>
-          </div>
-
-          <div></div>
-
-          <div id="success-message" class="sib-form-message-panel"
-               style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;">
-            <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-              <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
-                <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z" />
-              </svg>
-              <span class="sib-form-message-panel__inner-text">
-                Votre inscription est confirmée.
-              </span>
-            </div>
-          </div>
-
-          <div></div>
-
-          <div id="sib-container" class="sib-container--large sib-container--vertical"
-               style="text-align:center;background-color:#ffffff;max-width:540px;border-radius:3px;border-width:1px;border-color:#C0CCD9;border-style:solid;direction:ltr">
-
-            <!-- FORMULAIRE -->
-            <form id="sib-form" method="POST"
-                  action="https://9993d118.sibforms.com/serve/MUIFAK3119APnskJHpsgVS4_o5i_gO6x4jOU4DHJeBjGy8zx5U6XHvFBYr7E-QZpi7z6kzyFCHxKA19wG_vWbbHYq5mFFueTsfB_Lo8U3XwpOSF-FOdd8aESQjw7PTlCooC7bPfRgSu0Bjw8YZHpYFi0s9hSigRYZy4yco8-H0Dk_3uqAQ6LyPDwRZsaXRUL26qNStPbMKfkWZ0Y"
-                  data-type="subscription">
-
-              <div style="padding:8px 0;">
-                <div class="sib-form-block" style="font-size:32px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#0c67f6;">
-                  <p>DATA LIGUE 1 (Gratuit)</p>
-                </div>
+            <!-- messages -->
+            <div id="error-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica, sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;">
+              <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+                <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+                  <path d="M256 40c118.621 0 216 96.075 216 216 0 119.291-96.61 216-216 216-119.244 0-216-96.562-216-216 0-119.203 96.602-216 216-216m0-32C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm-11.49 120h22.979c6.823 0 12.274 5.682 11.99 12.5l-7 168c-.268 6.428-5.556 11.5-11.99 11.5h-8.979c-6.433 0-11.722-5.073-11.99-11.5l-7-168c-.283-6.818 5.167-12.5 11.99-12.5zM256 340c-15.464 0-28 12.536-28 28s12.536 28 28 28 28-12.536 28-28-12.536-28-28-28z"/>
+                </svg>
+                <span class="sib-form-message-panel__inner-text">Nous n'avons pas pu confirmer votre inscription.</span>
               </div>
+            </div>
 
-              <div style="padding:8px 0;">
-                <div class="sib-input sib-form-block">
-                  <div class="form__entry entry_block">
-                    <div class="form__label-row">
-                      <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;font-family:Helvetica,sans-serif;color:#3c4858;" for="EMAIL" data-required="*">Entrez votre EMAIL</label>
-                      <div class="entry__field">
-                        <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+            <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica, sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;">
+              <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+                <svg viewBox="0 0 512 512" class="sib-icon sib-notification__icon">
+                  <path d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-118.664 0-216-96.055-216-216 0-118.663 96.055-216 216-216 118.664 0 216 96.055 216 216 0 118.663-96.055 216-216 216zm141.63-274.961L217.15 376.071c-4.705 4.667-12.303 4.637-16.97-.068l-85.878-86.572c-4.667-4.705-4.637-12.303.068-16.97l8.52-8.451c4.705-4.667 12.303-4.637 16.97.068l68.976 69.533 163.441-162.13c4.705-4.667 12.303-4.637 16.97.068l8.451 8.52c4.668 4.705 4.637 12.303-.068 16.97z"/>
+                </svg>
+                <span class="sib-form-message-panel__inner-text">Votre inscription est confirmée.</span>
+              </div>
+            </div>
+
+            <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center;background-color:#fff;max-width:540px;border-radius:3px;border:1px solid #C0CCD9;direction:ltr">
+              <form id="sib-form" method="POST"
+                    action="https://9993d118.sibforms.com/serve/MUIFAK3119APnskJHpsgVS4_o5i_gO6x4jOU4DHJeBjGy8zx5U6XHvFBYr7E-QZpi7z6kzyFCHxKA19wG_vWbbHYq5mFFueTsfB_Lo8U3XwpOSF-FOdd8aESQjw7PTlCooC7bPfRgSu0Bjw8YZHpYFi0s9hSigRYZy4yco8-H0Dk_3uqAQ6LyPDwRZsaXRUL26qNStPbMKfkWZ0Y"
+                    data-type="subscription">
+                <div style="padding:8px 0">
+                  <div class="sib-form-block" style="font-size:32px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#0c67f6">
+                    <p>DATA LIGUE 1 (Gratuit)</p>
+                  </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div style="padding:8px 0">
+                  <div class="sib-input sib-form-block">
+                    <div class="form__entry entry_block">
+                      <div class="form__label-row">
+                        <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;font-family:Helvetica,sans-serif;color:#3c4858" for="EMAIL" data-required="*">Entrez votre EMAIL</label>
+                        <div class="entry__field">
+                          <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+                        </div>
                       </div>
+                      <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
+                      <label class="entry__specification" style="font-size:12px;text-align:left;font-family:Helvetica,sans-serif;color:#8390A4">Personnalisez ce texte d'aide facultatif avant de publier votre formulaire..</label>
                     </div>
-                    <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
-                    <label class="entry__specification" style="font-size:12px;text-align:left;font-family:Helvetica,sans-serif;color:#8390A4;">
-                      Personnalisez ce texte d&#039;aide facultatif avant de publier votre formulaire..
-                    </label>
                   </div>
                 </div>
-              </div>
 
-              <!-- … (LISTE DE TOUS TES CHECKBOX CLUBS – inchangée) … -->
-              <!-- Pour garder la réponse courte je n’ai pas replié les 18 blocs :
-                   COPIE-COLLE ici tout le segment de tes <div class="entry__choice">…</div>
-                   que tu m’as fourni. Rien à modifier. -->
-
-              <!-- Déclaration -->
-              <div style="padding:8px 0;">
-                <div class="sib-form__declaration" style="direction:ltr">
-                  <div class="declaration-block-icon">
-                    <svg class="icon__SVG" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                      <defs>
-                        <symbol id="svgIcon-sphere" viewBox="0 0 63 63">
-                          <path class="path1" d="M31.54 0l1.05 3.06 ..."></path>
-                        </symbol>
-                      </defs>
-                    </svg>
-                    <svg class="svgIcon-sphere" style="width:63px;height:63px;"><use xlink:href="#svgIcon-sphere"></use></svg>
-                  </div>
-                  <div style="font-size:14px;text-align:left;font-family:Helvetica,sans-serif;color:#687484;">
-                    <p>Vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément
-                      <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank" rel="noopener">à la politique de confidentialité de Brevo.</a></p>
+                <!-- ✅ GROUPE DE CASES (clubs) — intégralement conservé -->
+                <div style="padding:8px 0">
+                  <div class="sib-checkbox-group sib-form-block" data-required="true">
+                    <div class="form__entry entry_mcq">
+                      <div class="form__label-row">
+                        <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;font-family:Helvetica,sans-serif;color:#3c4858" data-required="*">
+                          Choisissez votre CLUB et recevez l'analyse DATA après chaque journée (plusieurs choix possibles)
+                        </label>
+                        <div>
+                          <div class="entry__choice">
+                            <label class="checkbox__label">
+                              <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Angers" value="23" data-required="true" />
+                              <span class="checkbox checkbox_tick_positive"></span><span>Angers</span>
+                            </label>
+                          </div>
+                          <div class="entry__choice">
+                            <label class="checkbox__label">
+                              <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Auxerre" value="21" data-required="true" />
+                              <span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span>
+                            </label>
+                          </div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Brest" value="18" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Brest</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Le Havre" value="4" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Le Havre</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lens" value="13" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Lens</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lille" value="11" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Lille</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lorient" value="20" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Lorient</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lyon" value="9" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Lyon</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Marseille" value="24" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Marseille</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Metz" value="19" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Metz</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Monaco" value="10" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Monaco</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nantes" value="15" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Nantes</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nice" value="12" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Nice</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Paris FC" value="22" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Paris FC</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="PSG" value="3" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>PSG</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Rennes" value="14" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Rennes</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Strasbourg" value="17" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span></label></div>
+                          <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Toulouse" value="16" data-required="true" /><span class="checkbox checkbox_tick_positive"></span><span>Toulouse</span></label></div>
+                        </div>
+                      </div>
+                      <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- CTA -->
-              <div style="padding:8px 0;">
-                <div class="sib-form-block" style="text-align:left">
-                  <button class="sib-form-block__button sib-form-block__button-with-loader"
-                          style="font-size:23px;font-weight:700;font-family:Helvetica,sans-serif;color:#FFFFFF;background-color:#0c67f6;border-radius:3px;border-width:0"
-                          form="sib-form" type="submit">
-                    S&#039;INSCRIRE
-                  </button>
+                <!-- RGPD -->
+                <div style="padding:8px 0">
+                  <div class="sib-form__declaration" style="direction:ltr">
+                    <div class="declaration-block-icon">
+                      <svg class="svgIcon-sphere" style="width:63px;height:63px">
+                        <use xlink:href="#svgIcon-sphere"></use>
+                      </svg>
+                    </div>
+                    <div style="font-size:14px;text-align:left;color:#687484">
+                      <p>Vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément
+                        <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">à la politique de confidentialité de Brevo.</a>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <input type="text" name="email_address_check" value="" class="input--hidden">
-              <input type="hidden" name="locale" value="fr">
-            </form>
+                <!-- CTA -->
+                <div style="padding:8px 0">
+                  <div class="sib-form-block" style="text-align:left">
+                    <button class="sib-form-block__button sib-form-block__button-with-loader"
+                            style="font-size:23px;font-weight:700;font-family:Helvetica,sans-serif;color:#fff;background-color:#0c67f6;border-radius:3px;border:0"
+                            form="sib-form" type="submit">
+                      S'INSCRIRE
+                    </button>
+                  </div>
+                </div>
+
+                <!-- champs techniques -->
+                <input type="text" name="email_address_check" value="" class="input--hidden">
+                <input type="hidden" name="locale" value="fr">
+                <!-- ✅ UTM cachés (remplis par JS ci-dessous) -->
+                <input type="hidden" name="utm_source"  id="utm_source">
+                <input type="hidden" name="utm_medium"  id="utm_medium">
+                <input type="hidden" name="utm_campaign" id="utm_campaign">
+                <input type="hidden" name="utm_content" id="utm_content">
+              </form>
+            </div>
           </div>
         </div>
+        <!-- ====== / FORMULAIRE BREVO ====== -->
       </div>
-      <!-- ====== /EMBED BREV0 ====== -->
-
     </div>
   </div>
 
-  <!-- === Variables & JS Brevo (footer) === -->
+  <!-- Textes Brevo -->
   <script>
-    window.REQUIRED_CODE_ERROR_MESSAGE = 'Veuillez choisir un code pays';
-    window.LOCALE = 'fr';
+    window.REQUIRED_CODE_ERROR_MESSAGE='Veuillez choisir un code pays';
+    window.LOCALE='fr';
     window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE =
       "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
-    window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ. ";
-    window.GENERIC_INVALID_MESSAGE = "Les informations que vous avez fournies ne sont pas valides. Veuillez vérifier le format du champ et réessayer.";
+    window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ.";
+    window.GENERIC_INVALID_MESSAGE = window.EMAIL_INVALID_MESSAGE;
     window.REQUIRED_MULTISELECT_MESSAGE = 'Veuillez choisir au moins une option';
-    window.translation = {
-      common: {
-        selectedList: '{quantity} liste sélectionnée',
-        selectedLists: '{quantity} listes sélectionnées',
-        selectedOption: '{quantity} sélectionné',
-        selectedOptions: '{quantity} sélectionnés',
-      }
-    };
+    window.translation = { common:{ selectedList:'{quantity} liste sélectionnée', selectedLists:'{quantity} listes sélectionnées', selectedOption:'{quantity} sélectionné', selectedOptions:'{quantity} sélectionnés' } };
     var AUTOHIDE = Boolean(0);
   </script>
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
-  <!-- === Améliorations: passer les UTM à Brevo + fire generate_lead + redirect merci === -->
+  <!-- UTM -> hidden + redirect sur succès + event GA generate_lead -->
   <script>
-    (function () {
-      // 1) Ajoute les UTM de l'URL en hidden inputs (si tu veux les exploiter côté Brevo)
-      const params = new URLSearchParams(location.search);
-      const utmKeys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
-      const form = document.getElementById("sib-form");
-      if (form) {
-        utmKeys.forEach(k => {
-          const v = params.get(k);
-          if (v) {
-            const i = document.createElement("input");
-            i.type = "hidden"; i.name = k; i.value = v;
-            form.appendChild(i);
+    function readCookie(name){
+      return document.cookie.split('; ').reduce((acc, c)=>{
+        const [k,v]=c.split('=');
+        if(k===name) acc=decodeURIComponent(v);
+        return acc;
+      }, '');
+    }
+    function getParam(name){
+      const u = new URL(location.href);
+      return u.searchParams.get(name) || readCookie(name) || '';
+    }
+    function setHidden(id, val){ const el=document.getElementById(id); if(el) el.value = val || ''; }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // Remplit les UTM cachés pour Brevo
+      const utm = {
+        source:   getParam('utm_source'),
+        medium:   getParam('utm_medium'),
+        campaign: getParam('utm_campaign') || 'signup_l1_2025',
+        content:  getParam('utm_content')  || 'bio'
+      };
+      setHidden('utm_source',  utm.source);
+      setHidden('utm_medium',  utm.medium);
+      setHidden('utm_campaign',utm.campaign);
+      setHidden('utm_content', utm.content);
+
+      // Observe le panneau de succès pour déclencher GA + rediriger
+      const success = document.getElementById('success-message');
+      if(success){
+        const obs = new MutationObserver(()=>{
+          const vis = getComputedStyle(success).display !== 'none';
+          if(vis || success.textContent.includes('confirmée')){
+            // GA4 event côté front (en plus de l’éventuel server-side)
+            try{
+              gtag('event','generate_lead',{
+                form_name: 'Brevo - Inscription',
+                origin: utm.source || '(direct)',
+                medium: utm.medium || '(none)',
+                variant: utm.content || 'bio'
+              });
+            }catch(e){}
+            // redirection merci + UTM
+            const next = new URL('/merci-inscription/', location.origin);
+            next.searchParams.set('utm_source',   utm.source   || '');
+            next.searchParams.set('utm_medium',   utm.medium   || '');
+            next.searchParams.set('utm_campaign', utm.campaign || '');
+            next.searchParams.set('utm_content',  utm.content  || '');
+            setTimeout(()=>location.href = next.toString(), 400);
+            obs.disconnect();
           }
         });
+        obs.observe(success, {attributes:true, attributeFilter:['style','class'], childList:true, subtree:true});
       }
-
-      // 2) Observe l'apparition du panneau "success" pour envoyer generate_lead puis rediriger
-      const success = document.getElementById("success-message");
-      if (!success) return;
-      const isVisible = el => {
-        const style = window.getComputedStyle(el);
-        return style.display !== "none" && style.visibility !== "hidden" && style.opacity !== "0";
-      };
-      const obs = new MutationObserver(() => {
-        if (isVisible(success)) {
-          try { if (window.gtag) gtag('event','generate_lead'); } catch (e) {}
-          // petite pause pour laisser partir l’event
-          setTimeout(() => { window.location.href = "/merci-inscription/"; }, 600);
-          obs.disconnect();
-        }
-      });
-      obs.observe(success, { attributes: true, attributeFilter: ['style','class'] });
-    })();
+    });
   </script>
 </body>
 </html>
