@@ -257,23 +257,17 @@
         obs.observe(success,{attributes:true,attributeFilter:['style','class'],childList:true,subtree:true});
       }
 
-      // Progressive disclosure (Voir plus / Voir moins)
-      const btn = document.getElementById('toggle-more');
-      const more = document.getElementById('more-clubs');
-      if(btn && more){
-        btn.addEventListener('click', ()=>{
-          const isHidden = more.hasAttribute('hidden');
-          if(isHidden){
-            more.removeAttribute('hidden');
-            btn.textContent = 'Voir moins';
-            btn.setAttribute('aria-expanded','true');
-          }else{
-            more.setAttribute('hidden','');
-            btn.textContent = 'Voir plus';
-            btn.setAttribute('aria-expanded','false');
-          }
-        });
-      }
+        // Progressive disclosure (only "Voir plus", no "Voir moins")
+        const btn  = document.getElementById('toggle-more');
+        const more = document.getElementById('more-clubs');
+        
+        if (btn && more) {
+          btn.addEventListener('click', () => {
+            more.removeAttribute('hidden');     // show the rest permanently
+            btn.remove();                        // remove the button, so no "Voir moins"
+            // (optional) if you prefer to keep the space: btn.style.display = 'none';
+          });
+        }
     });
   </script>
 </body>
