@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Merci pour ton inscription</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7EXC0P38K5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-7EXC0P38K5');
+  </script>
+
+  <!-- Favicons (si présents à la racine du site) -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <style>
+    :root{
+      --accent:#0C67F6;            /* Bleu demandé */
+      --bg:#f6f8ff;
+      --text:#0b1220;
+      --muted:#6b7280;
+      color-scheme: light;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, "Noto Sans", "Liberation Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background:var(--bg);
+      color:var(--text);
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+    .card{
+      width:100%;
+      max-width:680px;
+      background:#fff;
+      border-radius:18px;
+      padding: clamp(20px, 4vw, 36px);
+      box-shadow:0 18px 40px rgba(12,103,246,.12);
+      border:1px solid rgba(12,103,246,.15);
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:rgba(12,103,246,.08);color:var(--accent);
+      padding:8px 12px;border-radius:999px;font:600 14px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      margin-bottom:10px;
+    }
+    .check{width:18px;height:18px;border-radius:50%;background:var(--accent);display:inline-block;position:relative}
+    .check:after{content:"";position:absolute;left:5px;top:2px;width:5px;height:9px;border:2px solid #fff;border-top:0;border-left:0;transform:rotate(45deg)}
+    h1{margin:6px 0 10px;font-size: clamp(22px, 4.5vw, 30px);color:var(--accent)}
+    p{margin:0 0 12px;font-size: clamp(16px, 3.6vw, 18px);line-height:1.6}
+    .muted{color:var(--muted);font-size: clamp(13px, 3.2vw, 14px)}
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0b1220; --text:#e5e7eb; --muted:#9ca3af; }
+      .card{ background:#0f172a; border-color: rgba(12,103,246,.25); box-shadow: 0 18px 40px rgba(0,0,0,.45); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" role="main">
+    <section class="card" aria-labelledby="merci-title">
+      <div class="badge"><span class="check" aria-hidden="true"></span><span>Inscription confirmée</span></div>
+      <h1 id="merci-title">Merci pour ton inscription</h1>
+      <p>Tout est prêt. Tu recevras très bientôt nos prochains contenus.</p>
+      <p class="muted">Tu peux fermer cette page en toute sécurité.</p>
+    </section>
+  </main>
+
+  <!-- Patch : réutilise le même client_id et propage les UTM posés par l’Edge Function -->
+  <script>
+    function readCookie(n){
+      return document.cookie.split('; ').find(r => r.startsWith(n+'='))?.split('=')[1];
+    }
+    // 1) Reprend le client_id si posé par l’Edge Function
+    (function setClientId(){
+      var cid = readCookie('cid');
+      if (!cid) return;
+      gtag('config','G-7EXC0P38K5', { client_id: cid });
+    })();
+    // 2) Envoie la conversion avec les UTM
+    (function sendLead(){
+      var src = readCookie('utm_source');
+      var med = readCookie('utm_medium');
+      var cmp = readCookie('utm_campaign');
+      var ctt = readCookie('utm_content');
+      gtag('event','generate_lead', {
+        form_name: 'Brevo - Inscription newsletter',
+        source: 'brevo_form',
+        utm_source: src, utm_medium: med, utm_campaign: cmp, utm_content: ctt
+      });
+    })();
+  </script>
+</body>
+</html>
