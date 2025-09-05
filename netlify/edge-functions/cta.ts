@@ -1,16 +1,21 @@
 // netlify/edge-functions/cta.ts
-// Logs click_cta to GA4 server-side (no UI step), sets cookies (cid + utm_*), then redirects to Brevo.
+// 1) Log 'click_cta' dans GA4 via Measurement Protocol (server-side)
+// 2) Pose des cookies (cid + utm_*)
+// 3) Redirige directement vers TA page formulaire intégrée (favicon & GA OK)
 //
-// Required: create a GA4 Measurement Protocol API secret
-// GA4 → Admin → Data streams → choose your Web stream → Measurement Protocol API secrets → Create
-// Put it in GA_API_SECRET below.
+// Rappels :
+// - GA4 → Admin → Data streams → Web stream → Measurement Protocol API secrets → Create
+// - GA_MEASUREMENT_ID = ID GA4 ; GA_API_SECRET = secret Measurement Protocol.
 
-const GA_MEASUREMENT_ID = "G-7EXC0P38K5"; // your GA4 ID
-const GA_API_SECRET = "6eAtVWmxTGi10yc7LmD0fg"; // <-- fill this
-const BREVO_TARGET = "https://9993d118.sibforms.com/serve/MUIFAIfr1XLjDYI4YSAAC6eff0C_gyvartLAUHoXik0N54Oyje40Bz3TPUAhN-dcdb6eSAyZPrgHsHFREjcmA1jDhoQhzMn_fIGB_re1XM0gTaSV6IXZKoPoOt2SmphEc_KflKS1p0JVge0DUqoBmRMOjwp_fP2TqjQg_LBtnWkN0fgfmpvAq8ukpRNq-qjRJMtC4Tjlnv3yEZ53"; // your Brevo form URL (long)
+const GA_MEASUREMENT_ID = "G-7EXC0P38K5";
+const GA_API_SECRET     = "6eAtVWmxTGi10yc7LmD0fg";
+
+// 👉 Cible désormais : la page locale qui embarque le formulaire Brevo
+// (Quand ton domaine custom est prêt, remplace par https://dataligue1.fr/formulaire/)
+const FORM_PAGE = "https://dataligue1.netlify.app/formulaire/";
 
 function parseCookies(header: string | null): Record<string,string> {
-  const out: Record<string,string> = {}
+  const out: Record<string,string> = {};
   if (!header) return out;
   const parts = header.split(/;\s*/);
   for (const p of parts) {
@@ -20,18 +25,20 @@ function parseCookies(header: string | null): Record<string,string> {
   return out;
 }
 
-function cookie(name: string, value: string, maxAge=60*60*24*180) {
+function cookie(name: string, value: string, maxAge = 60 * 60 * 24 * 180) {
   return `${name}=${value}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`;
 }
 
 function mapSource(pathname: string) {
-  // /ig/<content?>, /x/<content?>, /fb/<content?>
+  // Routes prévues : /ig/*, /x/*, /fb/*  (et fallback)
+  // /ig/reel  => source=instagram medium=social content=reel
+  // /x/bio    => source=twitter   medium=social content=bio
   const [, first, ...rest] = pathname.split("/"); // ["", "ig", "reel"]
   const content = rest.join("/") || "bio";
   switch (first) {
-    case "ig": return { source: "instagram", medium: "social", content };
-    case "x":  return { source: "twitter",   medium: "social", content };
-    case "fb": return { source: "facebook",  medium: "social", content };
+    case "ig": return { source: "instagram", medium: "social",  content };
+    case "x":  return { source: "twitter",   medium: "social",  content };
+    case "fb": return { source: "facebook",  medium: "social",  content };
     default:   return { source: "site",      medium: "referral", content };
   }
 }
@@ -39,26 +46,32 @@ function mapSource(pathname: string) {
 export default async (request: Request) => {
   const url = new URL(request.url);
   const { source, medium, content } = mapSource(url.pathname);
+
+  // cid dans cookie (sinon UUID)
   const cookies = parseCookies(request.headers.get("cookie"));
   let cid = cookies["cid"];
   if (!cid) cid = crypto.randomUUID();
 
-  // Build redirect target (append UTM)
-  const target = new URL(BREVO_TARGET);
-  target.searchParams.set("utm_source", source);
-  target.searchParams.set("utm_medium", medium);
-  target.searchParams.set("utm_campaign", "signup_l1_2025");
-  target.searchParams.set("utm_content", content);
+  // Cible = page locale /formulaire/ avec UTM
+  const target = new URL(FORM_PAGE);
 
-  // Fire GA4 Measurement Protocol event (server-side)
-  // Doc: https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference
-  const body = {
+  // Conserve aussi les éventuels paramètres déjà présents (sécurité)
+  url.searchParams.forEach((v, k) => target.searchParams.set(k, v));
+
+  // Fixe nos UTM (elles écrasent si déjà présentes — souhaité)
+  target.searchParams.set("utm_source",   source);
+  target.searchParams.set("utm_medium",   medium);
+  target.searchParams.set("utm_campaign", "signup_l1_2025");
+  target.searchParams.set("utm_content",  content);
+
+  // Événement GA4 Measurement Protocol
+  const mpBody = {
     client_id: cid,
     non_personalized_ads: true,
     events: [{
       name: "click_cta",
       params: {
-        form_name: "Brevo - Inscription newsletter",
+        form_name: "Brevo - Inscription newsletter (wrapper)",
         origin: source,
         medium: medium,
         variant: content,
@@ -68,20 +81,21 @@ export default async (request: Request) => {
   };
 
   try {
-    await fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body)
-    });
-  } catch (_) { /* ignore network errors, still redirect */ }
+    await fetch(
+      `https://www.google-analytics.com/mp/collect?measurement_id=${GA_MEASUREMENT_ID}&api_secret=${GA_API_SECRET}`,
+      { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(mpBody) }
+    );
+  } catch {
+    // On ignore les erreurs réseau, la redirection doit se faire quand même
+  }
 
-  // Set cookies (cid + utm_*) so the thank-you page can reuse them
+  // Cookies (cid + utm_*) pour potentielle réutilisation côté merci-inscription
   const headers = new Headers();
   headers.append("Set-Cookie", cookie("cid", cid));
-  headers.append("Set-Cookie", cookie("utm_source", source));
-  headers.append("Set-Cookie", cookie("utm_medium", medium));
+  headers.append("Set-Cookie", cookie("utm_source",   source));
+  headers.append("Set-Cookie", cookie("utm_medium",   medium));
   headers.append("Set-Cookie", cookie("utm_campaign", "signup_l1_2025"));
-  headers.append("Set-Cookie", cookie("utm_content", content));
+  headers.append("Set-Cookie", cookie("utm_content",  content));
 
   headers.set("Location", target.toString());
   return new Response(null, { status: 302, headers });
