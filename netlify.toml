@@ -1,7 +1,4 @@
 # netlify.toml
-[edge_functions]
-  deno_import_map = "netlify/edge-functions/import_map.json"
-
 [[edge_functions]]
   function = "cta"
   path = "/ig/*"
@@ -13,3 +10,4 @@
 [[edge_functions]]
   function = "cta"
   path = "/fb/*"
+
