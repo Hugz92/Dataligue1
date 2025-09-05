@@ -1,0 +1,16 @@
+# --- Fichiers statiques (servent tel quels) ---
+/dl1-logo-officiel.png    /dl1-logo-officiel.png    200
+/favicon.ico              /favicon.ico              200
+/favicon-16x16.png        /favicon-16x16.png        200
+/favicon-32x32.png        /favicon-32x32.png        200
+/apple-touch-icon.png     /apple-touch-icon.png     200
+
+# --- Page MERCI : toujours servie localement ---
+/merci-inscription        /merci-inscription/index.html   200
+/merci-inscription/*      /merci-inscription/index.html   200
+
+# --- Racine : vers Brevo (optionnel, si tu veux que / aille sur le formulaire) ---
+/    https://9993d118.sibforms.com/serve/MUIFAIfr1XLjDYI4YSAAC6eff0C_gyvartLAUHoXik0N54Oyje40Bz3TPUAhN-dcdb6eSAyZPrgHsHFREjcmA1jDhoQhzMn_fIGB_re1XM0gTaSV6IXZKoPoOt2SmphEc_KflKS1p0JVge0DUqoBmRMOjwp_fP2TqjQg_LBtnWkN0fgfmpvAq8ukpRNq-qjRJMtC4Tjlnv3yEZ53  302
+
+# --- Catch-all : tout le reste vers Brevo (à garder tant que tu n'as pas d'autres pages locales) ---
+/*   https://9993d118.sibforms.com/serve/MUIFAIfr1XLjDYI4YSAAC6eff0C_gyvartLAUHoXik0N54Oyje40Bz3TPUAhN-dcdb6eSAyZPrgHsHFREjcmA1jDhoQhzMn_fIGB_re1XM0gTaSV6IXZKoPoOt2SmphEc_KflKS1p0JVge0DUqoBmRMOjwp_fP2TqjQg_LBtnWkN0fgfmpvAq8ukpRNq-qjRJMtC4Tjlnv3yEZ53  302
