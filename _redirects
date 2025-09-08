@@ -1,18 +1,15 @@
-# --- Fichiers statiques (servent tels quels)
- /dl1-logo-officiel.png   /dl1-logo-officiel.png   200
- /favicon.ico             /favicon.ico             200
- /favicon-16x16.png       /favicon-16x16.png       200
- /favicon-32x32.png       /favicon-32x32.png       200
- /apple-touch-icon.png    /apple-touch-icon.png    200
+/dl1-logo-officiel.png   /dl1-logo-officiel.png   200
+/favicon.ico             /favicon.ico             200
+/favicon-16x16.png       /favicon-16x16.png       200
+/favicon-32x32.png       /favicon-32x32.png       200
+/apple-touch-icon.png    /apple-touch-icon.png    200
 
-# --- Pages locales
- /formulaire              /formulaire/index.html   200
- /formulaire/*            /formulaire/index.html   200
- /merci-inscription       /merci-inscription/index.html   200
- /merci-inscription/*     /merci-inscription/index.html   200
+/formulaire              /formulaire/index.html   200
+/formulaire/*            /formulaire/index.html   200
+/merci-inscription       /merci-inscription/index.html   200
+/merci-inscription/*     /merci-inscription/index.html   200
 
-# --- Racine -> Formulaire (active si tu veux que "/" affiche le formulaire)
- /                        /formulaire/             200
+/                        /formulaire/index.html   200
 
-# --- Canonicalisation www -> apex (facultatif si déjà géré par Netlify)
- https://www.dataligue1.fr/*   https://dataligue1.fr/:splat   301!
+https://www.dataligue1.fr/*  https://dataligue1.fr/:splat   301!
+
