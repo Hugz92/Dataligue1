@@ -12,7 +12,7 @@ const GA_API_SECRET     = "6eAtVWmxTGi10yc7LmD0fg";
 
 // 👉 Cible désormais : la page locale qui embarque le formulaire Brevo
 // (Quand ton domaine custom est prêt, remplace par https://dataligue1.fr/formulaire/)
-const FORM_PAGE = "https://dataligue1.netlify.app/formulaire/";
+const FORM_PAGE = "https://dataligue1.fr/formulaire/";
 
 function parseCookies(header: string | null): Record<string,string> {
   const out: Record<string,string> = {};
