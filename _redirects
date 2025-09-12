@@ -9,11 +9,15 @@
 /merci-inscription       /merci-inscription/index.html   200
 /merci-inscription/*     /merci-inscription/index.html   200
 
-# --- AJOUTE CES 2 LIGNES ---
+# --- LEGAL ---
 /privacy                 /legal/privacy.html        200
 /data-deletion           /legal/data-deletion.html  200
-# ---------------------------
 
+# --- OAUTH CALLBACK ---
+/oauth/callback          /legal/oauth-callback.html 200
+/oauth/callback/*        /legal/oauth-callback.html 200
+
+# --- ROOT ---
 /                        /formulaire/index.html   200
 
 https://www.dataligue1.fr/*  https://dataligue1.fr/:splat   301
