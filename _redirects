@@ -9,7 +9,11 @@
 /merci-inscription       /merci-inscription/index.html   200
 /merci-inscription/*     /merci-inscription/index.html   200
 
+# --- AJOUTE CES 2 LIGNES ---
+/privacy                 /legal/privacy.html        200
+/data-deletion           /legal/data-deletion.html  200
+# ---------------------------
+
 /                        /formulaire/index.html   200
 
-https://www.dataligue1.fr/*  https://dataligue1.fr/:splat   301!
-
+https://www.dataligue1.fr/*  https://dataligue1.fr/:splat   301
