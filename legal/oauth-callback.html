@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connexion terminée</title>
+  <style>
+    :root{color-scheme:light dark}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,sans-serif;margin:0;padding:32px;line-height:1.5}
+    .card{max-width:720px;margin:auto;border:1px solid #ddd;border-radius:12px;padding:24px}
+    h1{font-size:1.4rem;margin:0 0 12px}
+    .ok{color:#057a55}
+    .err{color:#b91c1c}
+    pre{white-space:pre-wrap;word-break:break-word;background:#f6f6f6;padding:12px;border-radius:8px}
+    button{padding:10px 14px;border-radius:8px;border:1px solid #ccc;cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Connexion terminée</h1>
+    <p id="msg">Traitement des données de connexion…</p>
+    <pre id="dump" hidden></pre>
+    <p><button id="close" hidden>Fermer</button></p>
+  </div>
+
+  <script>
+    const qs   = new URLSearchParams(location.search);
+    const hash = new URLSearchParams(location.hash.slice(1));
+
+    const payload = {
+      code:  qs.get('code'),
+      state: qs.get('state'),
+      error: qs.get('error') || hash.get('error'),
+      error_description: qs.get('error_description') || hash.get('error_description'),
+      access_token: hash.get('access_token'),
+      token_type:   hash.get('token_type'),
+      expires_in:   hash.get('expires_in')
+    };
+
+    const msg  = document.getElementById('msg');
+    const dump = document.getElementById('dump');
+    const btn  = document.getElementById('close');
+
+    function finish(text, ok=true){
+      msg.textContent = text;
+      msg.className = ok ? 'ok' : 'err';
+      dump.hidden = false;
+      dump.textContent = JSON.stringify(payload, null, 2);
+      btn.hidden = false;
+    }
+
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage({ source:'dl1-oauth', ...payload }, window.location.origin);
+      }
+    } catch(_) {}
+
+    if (payload.access_token) {
+      localStorage.setItem('dl1_access_token', payload.access_token);
+      localStorage.setItem('dl1_token_exp', String(Date.now() + (Number(payload.expires_in||0)*1000)));
+      finish('Connexion réussie (token reçu). Vous pouvez fermer cette fenêtre.');
+    } else if (payload.code) {
+      localStorage.setItem('dl1_auth_code', payload.code);
+      finish('Code d’auth reçu. Échange à réaliser côté serveur.');
+    } else if (payload.error) {
+      finish('Erreur de connexion : ' + payload.error + (payload.error_description ? ' – ' + payload.error_description : ''), false);
+    } else {
+      finish('Aucun paramètre OAuth détecté (ni code, ni access_token).', false);
+    }
+
+    btn.addEventListener('click', () => window.close());
+  </script>
+</body>
+</html>
