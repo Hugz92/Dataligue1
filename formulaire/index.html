@@ -144,45 +144,45 @@
 
                   <label class="entry__error entry__error--primary" style="font-size:14px;text-align:left;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
                 </div>
-
-                <!-- RGPD -->
-                <div style="padding:6px 0">
-                  <div class="sib-form__declaration" style="direction:ltr">
-                    <div class="declaration-block-icon">
-                      <svg class="svgIcon-sphere" style="width:40px;height:40px">
-                        <use xlink:href="#svgIcon-sphere"></use>
-                      </svg>
-                    </div>
-                    <div style="font-size:13px;text-align:left;color:#687484">
-                      <p>Vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément
-                        <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">à la politique de confidentialité de Brevo.</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- CTA -->
-                <div style="padding:6px 0">
-                  <div class="sib-form-block" style="text-align:left">
-                    <button class="sib-form-block__button sib-form-block__button-with-loader"
-                            style="font-size:18px;font-weight:700;color:#fff;background-color:#0c67f6;border-radius:6px;border:0"
-                            form="sib-form" type="submit">
-                      S'INSCRIRE
-                    </button>
-                  </div>
-                </div>
-
-                <!-- champs techniques -->
-                <input type="text" name="email_address_check" value="" class="input--hidden">
-                <input type="hidden" name="locale" value="fr">
-                <!-- UTM cachés -->
-                <input type="hidden" name="utm_source"  id="utm_source">
-                <input type="hidden" name="utm_medium"  id="utm_medium">
-                <input type="hidden" name="utm_campaign" id="utm_campaign">
-                <input type="hidden" name="utm_content" id="utm_content">
-              </form>
+              </div>
             </div>
-          </div>
+
+            <!-- RGPD -->
+            <div style="padding:6px 0">
+              <div class="sib-form__declaration" style="direction:ltr">
+                <div class="declaration-block-icon">
+                  <svg class="svgIcon-sphere" style="width:40px;height:40px">
+                    <use xlink:href="#svgIcon-sphere"></use>
+                  </svg>
+                </div>
+                <div style="font-size:13px;text-align:left;color:#687484">
+                  <p>Vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément
+                    <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">à la politique de confidentialité de Brevo.</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div style="padding:6px 0">
+              <div class="sib-form-block" style="text-align:left">
+                <button class="sib-form-block__button sib-form-block__button-with-loader"
+                        style="font-size:18px;font-weight:700;color:#fff;background-color:#0c67f6;border-radius:6px;border:0"
+                        form="sib-form" type="submit">
+                  S'INSCRIRE
+                </button>
+              </div>
+            </div>
+
+            <!-- champs techniques -->
+            <input type="text" name="email_address_check" value="" class="input--hidden">
+            <input type="hidden" name="locale" value="fr">
+            <!-- UTM cachés -->
+            <input type="hidden" name="utm_source"  id="utm_source">
+            <input type="hidden" name="utm_medium"  id="utm_medium">
+            <input type="hidden" name="utm_campaign" id="utm_campaign">
+            <input type="hidden" name="utm_content" id="utm_content">
+          </form>
         </div>
       </div>
     </div>
@@ -203,7 +203,7 @@
   </script>
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
-  <!-- UTM -> hidden + redirect success + GA generate_lead + “Voir plus” -->
+  <!-- UTM -> hidden + redirect success + GA generate_lead + "Voir plus" -->
   <script>
     function readCookie(name){
       return document.cookie.split('; ').reduce((acc, c)=>{
@@ -257,17 +257,17 @@
         obs.observe(success,{attributes:true,attributeFilter:['style','class'],childList:true,subtree:true});
       }
 
-        // Progressive disclosure (only "Voir plus", no "Voir moins")
-        const btn  = document.getElementById('toggle-more');
-        const more = document.getElementById('more-clubs');
-        
-        if (btn && more) {
-          btn.addEventListener('click', () => {
-            more.removeAttribute('hidden');     // show the rest permanently
-            btn.remove();                        // remove the button, so no "Voir moins"
-            // (optional) if you prefer to keep the space: btn.style.display = 'none';
-          });
-        }
+      // Progressive disclosure (only "Voir plus", no "Voir moins")
+      const btn  = document.getElementById('toggle-more');
+      const more = document.getElementById('more-clubs');
+      
+      if (btn && more) {
+        btn.addEventListener('click', () => {
+          more.removeAttribute('hidden');     // show the rest permanently
+          btn.remove();                        // remove the button, so no "Voir moins"
+          // (optional) if you prefer to keep the space: btn.style.display = 'none';
+        });
+      }
     });
   </script>
 </body>
