@@ -31,7 +31,7 @@
   </style>
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 
-  <!-- Styles : fond bleu, pas de cadre global -->
+  <!-- Styles -->
   <style>
     :root{ --blue:#0c67f6; --ink:#3C4858; }
     html,body{ margin:0; padding:0; background:var(--blue); font-family:Helvetica,Arial,sans-serif }
@@ -40,11 +40,12 @@
     .sib-form .entry__choice span{ color:var(--ink) !important; }
     .sib-form .sib-form-block p{ color:#0c67f6 !important; }
     .sib-form-block__button{ width:100%; padding:.85rem 1rem }
+
     .declaration-block-icon{ float:left; margin-right:10px }
     .declaration-block-icon svg{ display:block }
     .sib-form__declaration:after{ content:""; display:block; clear:both }
 
-    /* Bouton Voir plus */
+    /* Voir plus */
     .see-more-btn{
       margin:6px 0 2px;
       background:#eef4ff;
@@ -58,16 +59,30 @@
     .see-more-btn:focus{ outline:2px solid #0c67f6; outline-offset:2px }
     #more-clubs[hidden]{ display:none!important; }
 
+    /* Honeypot Brevo */
     .input--hidden { position: absolute; left: -5000px; }
 
-    /* Anti-overlay : garantit la cliquabilité du bouton */
-    .sib-form-block__button { position: relative; z-index: 2; pointer-events: auto; }
+    /* Anti-overlay agressif pour garantir le clic */
+    .sib-form-container, #sib-container, .sib-form-block { position: relative; }
     #error-message, #success-message { position: static !important; }
+    .sib-form-block__button,
+    .sib-form-block__button.sib-form-block__button-with-loader {
+      position: relative;
+      z-index: 9999;
+      pointer-events: auto !important;
+    }
+    /* Désactive tout pseudo-élément de "loader" qui capterait les clics */
+    .sib-form-block__button-with-loader::before,
+    .sib-form-block__button-with-loader::after {
+      content: none !important;
+      display: none !important;
+      pointer-events: none !important;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- Définition du symbole SVG (avatar RGPD) -->
+    <!-- SVG -->
     <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <symbol id="svgIcon-sphere" viewBox="0 0 63 63">
@@ -83,7 +98,7 @@
         <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;display:none"></div>
 
         <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center;background-color:#fff;max-width:540px;border-radius:3px;border:1px solid #C0CCD9;direction:ltr">
-          <form id="sib-form" method="POST"
+          <form id="sib-form" method="POST" novalidate
                 action="https://9993d118.sibforms.com/serve/MUIFAK3119APnskJHpsgVS4_o5i_gO6x4jOU4DHJeBjGy8zx5U6XHvFBYr7E-QZpi7z6kzyFCHxKA19wG_vWbbHYq5mFFueTsfB_Lo8U3XwpOSF-FOdd8aESQjw7PTlCooC7bPfRgSu0Bjw8YZHpYFi0s9hSigRYZy4yco8-H0Dk_3uqAQ6LyPDwRZsaXRUL26qNStPbMKfkWZ0Y"
                 data-type="subscription">
 
@@ -100,7 +115,6 @@
                   <div class="form__label-row">
                     <label class="entry__label" style="font-weight:700;text-align:left;font-size:15px;color:#3c4858" for="EMAIL" data-required="*">Entrez votre EMAIL</label>
                     <div class="entry__field">
-                      <!-- MODIF: type=email + autocomplete -->
                       <input class="input" type="email" id="EMAIL" name="EMAIL" autocomplete="email" placeholder="EMAIL" required />
                     </div>
                   </div>
@@ -110,9 +124,8 @@
               </div>
             </div>
 
-            <!-- CLUBS (réordonnés) + divulgation progressive -->
+            <!-- CLUBS -->
             <div style="padding:6px 0">
-              <!-- MODIF: on garde data-required sur le groupe seulement -->
               <div class="sib-checkbox-group sib-form-block" data-required="true">
                 <div class="form__entry entry_mcq">
                   <div class="form__label-row">
@@ -121,7 +134,7 @@
                     </label>
 
                     <div id="club-list">
-                      <!-- 1-8 (visibles) — MODIF: suppression des data-required sur inputs -->
+                      <!-- visibles -->
                       <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="PSG" value="3" /><span class="checkbox checkbox_tick_positive"></span><span>PSG</span></label></div>
                       <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Marseille" value="24" /><span class="checkbox checkbox_tick_positive"></span><span>Marseille</span></label></div>
                       <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lyon" value="9" /><span class="checkbox checkbox_tick_positive"></span><span>Lyon</span></label></div>
@@ -131,10 +144,10 @@
                       <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Rennes" value="14" /><span class="checkbox checkbox_tick_positive"></span><span>Rennes</span></label></div>
                       <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nice" value="12" /><span class="checkbox checkbox_tick_positive"></span><span>Nice</span></label></div>
 
-                      <!-- Bouton Voir plus -->
+                      <!-- Voir plus -->
                       <button id="toggle-more" type="button" class="see-more-btn" aria-expanded="false" aria-controls="more-clubs">Voir plus</button>
 
-                      <!-- 9+ (cachés au départ) — MODIF: suppression des data-required sur inputs -->
+                      <!-- cachés -->
                       <div id="more-clubs" hidden>
                         <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Monaco" value="10" /><span class="checkbox checkbox_tick_positive"></span><span>Monaco</span></label></div>
                         <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Strasbourg" value="17" /><span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span></label></div>
@@ -174,10 +187,9 @@
             <!-- CTA -->
             <div style="padding:6px 0">
               <div class="sib-form-block" style="text-align:left">
-                <!-- MODIF: suppression de l’attribut form -->
                 <button class="sib-form-block__button sib-form-block__button-with-loader"
                         style="font-size:18px;font-weight:700;color:#fff;background-color:#0c67f6;border-radius:6px;border:0"
-                        type="submit">
+                        type="submit" id="cta-submit">
                   S'INSCRIRE
                 </button>
               </div>
@@ -212,7 +224,7 @@
   </script>
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
-  <!-- UTM -> hidden + redirect success + GA generate_lead + "Voir plus" + Validation clubs -->
+  <!-- UTM + Redirection + Voir plus + Debug clic -->
   <script>
     function readCookie(name){
       return document.cookie.split('; ').reduce((acc, c)=>{
@@ -228,7 +240,7 @@
     function setHidden(id, val){ const el=document.getElementById(id); if(el) el.value = val || ''; }
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      // UTM -> champs hidden
+      // UTM -> hidden
       const utm = {
         source:   getParam('utm_source'),
         medium:   getParam('utm_medium'),
@@ -240,7 +252,15 @@
       setHidden('utm_campaign',utm.campaign);
       setHidden('utm_content', utm.content);
 
-      // Observer succès -> GA + redirection
+      // Debug: vérifier que le clic arrive bien
+      const cta = document.getElementById('cta-submit');
+      if (cta) {
+        cta.addEventListener('click', () => {
+          console.log('[Brevo] Clic sur S\\'INSCRIRE détecté');
+        });
+      }
+
+      // Redirection après succès (via mutation du panneau succès Brevo)
       const success = document.getElementById('success-message');
       if(success){
         const obs = new MutationObserver(()=>{
@@ -266,37 +286,15 @@
         obs.observe(success,{attributes:true,attributeFilter:['style','class'],childList:true,subtree:true});
       }
 
-      // Progressive disclosure (only "Voir plus", no "Voir moins")
+      // Voir plus
       const btn  = document.getElementById('toggle-more');
       const more = document.getElementById('more-clubs');
       if (btn && more) {
         btn.addEventListener('click', () => {
-          more.removeAttribute('hidden'); // show the rest permanently
-          btn.remove();                   // remove the button, so no "Voir moins"
+          more.removeAttribute('hidden');
+          btn.remove();
         });
       }
-
-      // Validation HTML5 : au moins un club (sécurité côté client)
-      (function(){
-        const form  = document.getElementById('sib-form');
-        if (!form) return;
-        const boxes = Array.from(form.querySelectorAll('input[name="lists_25[]"]'));
-        if (!boxes.length) return;
-
-        function validateClubs(){
-          const ok = boxes.some(b => b.checked);
-          boxes[0].setCustomValidity(ok ? '' : 'Veuillez choisir au moins un club');
-        }
-
-        boxes.forEach(b => b.addEventListener('change', validateClubs));
-        form.addEventListener('submit', (e) => {
-          validateClubs();
-          if (!form.checkValidity()) {
-            e.preventDefault();
-            form.reportValidity();
-          }
-        });
-      })();
     });
   </script>
 </body>
