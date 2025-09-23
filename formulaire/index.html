@@ -297,5 +297,45 @@
       }
     });
   </script>
+  <script>
+(function () {
+  const form = document.getElementById('sib-form');
+  if (!form) return;
+
+  // Log: vérifie que l'event submit est bien déclenché
+  form.addEventListener('submit', () => {
+    console.log('[Brevo] submit event déclenché');
+  });
+
+  // Fallback: au clic, valide puis force le submit si rien ne part
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) {
+    btn.addEventListener('click', (e) => {
+      // Si un champ est invalide -> affiche les erreurs natives et bloque
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        form.reportValidity();
+        return;
+      }
+      // Form OK : on laisse Brevo tenter; si rien ne part, on force
+      let forced = false;
+      setTimeout(() => {
+        if (forced) return;
+        try {
+          if (typeof form.requestSubmit === 'function') {
+            form.requestSubmit();
+          } else {
+            form.submit();
+          }
+          forced = true;
+          console.log('[Brevo] submit forcé (fallback)');
+        } catch (err) {
+          console.error('Fallback submit error:', err);
+        }
+      }, 150);
+    });
+  }
+})();
+</script>
 </body>
 </html>
