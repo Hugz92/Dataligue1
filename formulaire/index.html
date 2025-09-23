@@ -71,7 +71,6 @@
       z-index: 9999;
       pointer-events: auto !important;
     }
-    /* Désactive tout pseudo-élément de "loader" qui capterait les clics */
     .sib-form-block__button-with-loader::before,
     .sib-form-block__button-with-loader::after {
       content: none !important;
@@ -222,14 +221,15 @@
     window.translation = { common:{ selectedList:'{quantity} liste sélectionnée', selectedLists:'{quantity} listes sélectionnées', selectedOption:'{quantity} sélectionné', selectedOptions:'{quantity} sélectionnés' } };
     var AUTOHIDE = Boolean(0);
   </script>
-  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+  <!-- Script Brevo désactivé car il plante au submit -->
+  <!-- <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script> -->
 
-  <!-- UTM + Redirection + Voir plus + Debug clic -->
+  <!-- UTM + Redirection + Voir plus -->
   <script>
     function readCookie(name){
       return document.cookie.split('; ').reduce((acc, c)=>{
         const [k,v]=c.split('=');
-        if(k===name) acc=decodeURIComponent(v);
+        if(k===name) acc=decodeURIComponent(v||'');
         return acc;
       }, '');
     }
@@ -252,40 +252,6 @@
       setHidden('utm_campaign',utm.campaign);
       setHidden('utm_content', utm.content);
 
-      // Debug: vérifier que le clic arrive bien
-      const cta = document.getElementById('cta-submit');
-      if (cta) {
-        cta.addEventListener('click', () => {
-          console.log("[Brevo] Clic sur S'INSCRIRE détecté");
-        });
-      }
-
-      // Redirection après succès (via mutation du panneau succès Brevo)
-      const success = document.getElementById('success-message');
-      if(success){
-        const obs = new MutationObserver(()=>{
-          const visible = getComputedStyle(success).display !== 'none' || success.textContent.includes('confirmée');
-          if(visible){
-            try{
-              gtag('event','generate_lead',{
-                form_name:'Brevo - Inscription',
-                origin: utm.source || '(direct)',
-                medium: utm.medium || '(none)',
-                variant: utm.content || 'bio'
-              });
-            }catch(e){}
-            const next = new URL('/merci-inscription/', location.origin);
-            next.searchParams.set('utm_source', utm.source || '');
-            next.searchParams.set('utm_medium', utm.medium || '');
-            next.searchParams.set('utm_campaign', utm.campaign || '');
-            next.searchParams.set('utm_content', utm.content || '');
-            setTimeout(()=>location.href = next.toString(), 350);
-            obs.disconnect();
-          }
-        });
-        obs.observe(success,{attributes:true,attributeFilter:['style','class'],childList:true,subtree:true});
-      }
-
       // Voir plus
       const btn  = document.getElementById('toggle-more');
       const more = document.getElementById('more-clubs');
@@ -297,45 +263,61 @@
       }
     });
   </script>
+
+  <!-- Soumission directe en fetch vers Brevo (bypass main.js) -->
   <script>
-(function () {
-  const form = document.getElementById('sib-form');
-  if (!form) return;
+  (function(){
+    const form = document.getElementById("sib-form");
+    if (!form) return;
 
-  // Log: vérifie que l'event submit est bien déclenché
-  form.addEventListener('submit', () => {
-    console.log('[Brevo] submit event déclenché');
-  });
+    const action  = form.getAttribute("action");
+    const success = document.getElementById("success-message");
+    const error   = document.getElementById("error-message");
+    const btn     = form.querySelector('button[type="submit"]');
+    const emailEl = form.querySelector("#EMAIL");
 
-  // Fallback: au clic, valide puis force le submit si rien ne part
-  const btn = form.querySelector('button[type="submit"]');
-  if (btn) {
-    btn.addEventListener('click', (e) => {
-      // Si un champ est invalide -> affiche les erreurs natives et bloque
-      if (!form.checkValidity()) {
-        e.preventDefault();
-        form.reportValidity();
-        return;
-      }
-      // Form OK : on laisse Brevo tenter; si rien ne part, on force
-      let forced = false;
-      setTimeout(() => {
-        if (forced) return;
-        try {
-          if (typeof form.requestSubmit === 'function') {
-            form.requestSubmit();
-          } else {
-            form.submit();
-          }
-          forced = true;
-          console.log('[Brevo] submit forcé (fallback)');
-        } catch (err) {
-          console.error('Fallback submit error:', err);
+    const show = (el,msg)=>{ if(el){ el.style.display="block"; el.textContent=msg; } };
+    const hide = ()=>{ if(success){success.style.display="none";success.textContent="";} if(error){error.style.display="none";error.textContent="";} };
+    const okEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||"").trim());
+    const oneClub = () => Array.from(form.querySelectorAll('input[name="lists_25[]"]')).some(c=>c.checked);
+
+    form.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      hide();
+
+      const email = emailEl ? emailEl.value : "";
+      if (!okEmail(email)) { show(error,"Veuillez saisir un email valide."); if (emailEl) emailEl.focus(); return; }
+      if (!oneClub())      { show(error,"Veuillez choisir au moins un club."); return; }
+
+      try{
+        if (btn) btn.disabled = true;
+
+        const resp = await fetch(action, {
+          method: "POST",
+          mode: "cors",
+          body: new FormData(form),
+          headers: { "Accept": "text/html,application/xhtml+xml,application/xml" }
+        });
+
+        if (resp.ok){
+          show(success,"Inscription confirmée !");
+          // Redirection avec UTM conservés
+          const next = new URL("/merci-inscription/", location.origin);
+          ["utm_source","utm_medium","utm_campaign","utm_content"].forEach(k=>{
+            const v = (form.querySelector("#"+k)||{}).value||"";
+            if (v) next.searchParams.set(k, v);
+          });
+          setTimeout(()=>{ location.href = next.toString(); }, 400);
+        } else {
+          show(error, "Erreur d’envoi ("+resp.status+").");
         }
-      }, 150);
+      } catch {
+        show(error, "Impossible de joindre le serveur d’inscription.");
+      } finally {
+        if (btn) btn.disabled = false;
+      }
     });
-  }
-})();
-</script>
+  })();
+  </script>
 </body>
 </html>
