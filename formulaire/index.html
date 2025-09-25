@@ -37,13 +37,9 @@
     html,body{ margin:0; padding:0; background:var(--blue); font-family:Helvetica,Arial,sans-serif }
     .wrap{ max-width:620px; margin:0px auto 24px; padding:0 10px }
     .sib-form .entry__label{ color:var(--ink) !important; }
-    .sib-form .entry__choice span{ color:var(--ink) !important; }
+    .sib-form .entry__choice span{ color:var(--ink) !important; font-size:18px !important; }
     .sib-form .sib-form-block p{ color:#0c67f6 !important; }
     .sib-form-block__button{ width:100%; padding:.85rem 1rem }
-
-    .declaration-block-icon{ float:left; margin-right:10px }
-    .declaration-block-icon svg{ display:block }
-    .sib-form__declaration:after{ content:""; display:block; clear:both }
 
     /* Voir plus */
     .see-more-btn{
@@ -55,6 +51,8 @@
       border-radius:6px;
       padding:.5rem .75rem;
       cursor:pointer;
+      width:100%;
+      text-align:center;
     }
     .see-more-btn:focus{ outline:2px solid #0c67f6; outline-offset:2px }
     #more-clubs[hidden]{ display:none!important; }
@@ -80,129 +78,240 @@
 
     /* iFrame caché */
     #sibframe{ width:0;height:0;border:0; position:absolute; left:-9999px; }
+
+    /* Background */
+    .sib-form{ background-color:#c8dbf6 !important; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- SVG -->
-    <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <symbol id="svgIcon-sphere" viewBox="0 0 63 63">
-          <path d="M31.54 0l1.05 3.06 3.385-.01-2.735 1.897 1.05 3.042-2.748-1.886-2.738 1.886 1.044-3.05-2.745-1.897h3.393zm13.97 3.019L46.555 6.4l3.384.01-2.743 2.101 1.048 3.387-2.752-2.1-2.752 2.1 1.054-3.382-2.745-2.105h3.385zm9.998 10.056l1.039 3.382h3.38l-2.751 2.1 1.05 3.382-2.744-2.091-2.743 2.091 1.054-3.381-2.754-2.1h3.385zM58.58 27.1l1.04 3.372h3.379l-2.752 2.096 1.05 3.387-2.744-2.091-2.75 2.092 1.054-3.387-2.747-2.097h3.376zm-3.076 14.02l1.044 3.364h3.385l-2.743 2.09 1.05 3.392-2.744-2.097-2.743 2.097 1.052-3.377-2.752-2.117 3.385-.01zm-9.985 9.91l1.045 3.364h3.393l-2.752 2.09 1.05 3.393-2.745-2.097-2.743 2.097 1.05-3.383-2.751-2.1 3.384-.01zM31.45 55.01l1.044 3.043 3.393-.008-2.752 1.9L34.19 63l-2.744-1.895-2.748 1.891 1.054-3.05-2.743-1.9h3.384zm-13.934-3.98l1.036 3.364h3.402l-2.752 2.09 1.053 3.393-2.747-2.097-2.752 2.097 1.053-3.382-2.743-2.1 3.384-.01zm-9.981-9.91l1.045 3.364h3.398l-2.748 2.09 1.05 3.392-2.753-2.1-2.752 2.096 1.053-3.382-2.743-2.102 3.384-.009zM4.466 27.1l1.038 3.372H8.88l-2.752 2.097 1.053 3.387-2.743-2.09-2.748 2.09 1.053-3.387L0 30.472h3.385zm3.069-14.025l1.045 3.382h3.395L9.23 18.56l1.05 3.381-2.752-2.09-2.752 2.09 1.053-3.381-2.744-2.1h3.384zm9.99-10.056L18.57 6.4l3.393.01-2.743 2.1 1.05 3.373-2.754-2.092-2.751 2.092 1.053-3.382-2.744-2.1h3.384zm24.938 19.394l-10-4.22a2.48 2.48 0 00-1.921 0l-10 4.22A2.529 2.529 0 0019 24.75c0 10.47 5.964 17.705 11.537 20.057a2.48 2.48 0 001.921 0C36.921 42.924 44 36.421 44 24.75a2.532 2.532 0 00-1.537-2.336zm-2.46 6.023l-9.583 9.705a.83.83 0 01-1.177 0l-5.416-5.485a.855.855 0 010-1.192l1.177-1.192a.83.83 0 011.177 0l3.65 3.697 7.819-7.916a.83.83 0 011.177 0l1.177 1.191a.843.843 0 010 1.192z" fill="#0092FF"></path>
-        </symbol>
-      </defs>
-    </svg>
-
     <!-- ====== FORMULAIRE BREVO ====== -->
-    <div class="sib-form" style="text-align:center;background-color:#0c67f6;">
+    <div class="sib-form" style="text-align:center;background-color:#c8dbf6;">
       <div id="sib-form-container" class="sib-form-container">
-        <div id="error-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;display:none"></div>
-        <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;display:none"></div>
+        <div id="error-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;display:none">
+          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span class="sib-form-message-panel__inner-text">Nous n'avons pas pu confirmer votre inscription.</span>
+          </div>
+        </div>
+        
+        <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;display:none">
+          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span class="sib-form-message-panel__inner-text">Votre inscription est confirmée.</span>
+          </div>
+        </div>
 
-        <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center;background-color:#fff;max-width:540px;border-radius:3px;border:1px solid #C0CCD9;direction:ltr">
+        <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center;background-color:rgba(255,255,255,1);max-width:540px;border-radius:3px;border-width:1px;border-color:#C0CCD9;border-style:solid;direction:ltr">
           <form id="sib-form" method="POST"
-                action="https://9993d118.sibforms.com/serve/MUIFAK3119APnskJHpsgVS4_o5i_gO6x4jOU4DHJeBjGy8zx5U6XHvFBYr7E-QZpi7z6kzyFCHxKA19wG_vWbbHYq5mFFueTsfB_Lo8U3XwpOSF-FOdd8aESQjw7PTlCooC7bPfRgSu0Bjw8YZHpYFi0s9hSigRYZy4yco8-H0Dk_3uqAQ6LyPDwRZsaXRUL26qNStPbMKfkWZ0Y"
+                action="https://9993d118.sibforms.com/serve/MUIFAIKOe5Sudb3ZQDKEZ40Z2g2hD0i5x83Jq37H2GPwMMxL-LQ7leF103fyMp2UJyw6OYdM0mZwq7bTEw2jnCIGOW_WhM2oChmuAxfT5e11foIE7TKZg2XoYbboS3em2DyNairtv7b_hixE2vTBFMMXnd6QVafE-ZP8cmHMjKDfUgH7MgkVDS2tFe8U5mFpgeO18UAIBBOhAo_q"
                 target="sibframe" data-type="subscription">
 
-            <div style="padding:4px 0">
-              <div class="sib-form-block" style="font-size:22px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#0c67f6">
+            <div style="padding:8px 0">
+              <div class="sib-form-block" style="font-size:34px;text-align:left;font-weight:700;font-family:&quot;Trebuchet MS&quot;,sans-serif;color:#0c67f6;background-color:transparent">
                 <p>DATA LIGUE 1 (Gratuit)</p>
               </div>
             </div>
 
-            <!-- EMAIL -->
-            <div style="padding:6px 0">
-              <div class="sib-input sib-form-block">
-                <div class="form__entry entry_block">
-                  <div class="form__label-row">
-                    <label class="entry__label" style="font-weight:700;text-align:left;font-size:15px;color:#3c4858" for="EMAIL" data-required="*">Entrez votre EMAIL</label>
-                    <div class="entry__field">
-                      <input class="input" type="email" id="EMAIL" name="EMAIL" autocomplete="email" placeholder="EMAIL" required />
-                    </div>
-                  </div>
-                  <label class="entry__error entry__error--primary" style="font-size:14px;text-align:left;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
-                  <label class="entry__specification" style="font-size:12px;text-align:left;color:#8390A4">Personnalisez ce texte d'aide facultatif avant de publier votre formulaire..</label>
+            <div style="padding:8px 0">
+              <div class="sib-form-block" style="font-size:16px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent">
+                <div class="sib-text-form-block">
+                  <p>Des stats claires et exclusives, livrées après chaque match de votre club.</p>
                 </div>
               </div>
             </div>
 
-            <!-- CLUBS -->
-            <div style="padding:6px 0">
+            <!-- EMAIL -->
+            <div style="padding:8px 0">
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;color:#3c4858" for="EMAIL" data-required="*">ENTREZ VOTRE EMAIL</label>
+                    <div class="entry__field">
+                      <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="votre@email.com" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- CLUBS avec Voir Plus -->
+            <div style="padding:8px 0">
               <div class="sib-checkbox-group sib-form-block" data-required="true">
                 <div class="form__entry entry_mcq">
                   <div class="form__label-row">
-                    <label class="entry__label" style="font-weight:700;text-align:left;font-size:15px;color:#3c4858" data-required="*">
+                    <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;color:#3c4858" data-required="*">
                       Choisissez votre CLUB et recevez l'analyse DATA après chaque journée (plusieurs choix possibles)
                     </label>
+                    
+                    <div style="">
+                      <!-- Clubs visibles (les plus populaires) -->
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="PSG" value="3" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">PSG</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Marseille" value="24" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Marseille</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lyon" value="9" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lyon</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lens" value="13" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lens</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lille" value="11" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lille</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Monaco" value="10" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Monaco</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nice" value="12" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Nice</span>
+                        </label>
+                      </div>
+                      <div class="entry__choice">
+                        <label class="checkbox__label">
+                          <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Rennes" value="14" data-required="true" />
+                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Rennes</span>
+                        </label>
+                      </div>
 
-                    <div id="club-list">
-                      <!-- visibles -->
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="PSG" value="3" /><span class="checkbox checkbox_tick_positive"></span><span>PSG</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Marseille" value="24" /><span class="checkbox checkbox_tick_positive"></span><span>Marseille</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lyon" value="9" /><span class="checkbox checkbox_tick_positive"></span><span>Lyon</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lens" value="13" /><span class="checkbox checkbox_tick_positive"></span><span>Lens</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lille" value="11" /><span class="checkbox checkbox_tick_positive"></span><span>Lille</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nantes" value="15" /><span class="checkbox checkbox_tick_positive"></span><span>Nantes</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Rennes" value="14" /><span class="checkbox checkbox_tick_positive"></span><span>Rennes</span></label></div>
-                      <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nice" value="12" /><span class="checkbox checkbox_tick_positive"></span><span>Nice</span></label></div>
+                      <!-- Bouton Voir plus -->
+                      <button id="toggle-more" type="button" class="see-more-btn" aria-expanded="false" aria-controls="more-clubs">Voir plus de clubs</button>
 
-                      <!-- Voir plus -->
-                      <button id="toggle-more" type="button" class="see-more-btn" aria-expanded="false" aria-controls="more-clubs">Voir plus</button>
-
-                      <!-- cachés -->
+                      <!-- Clubs cachés -->
                       <div id="more-clubs" hidden>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Monaco" value="10" /><span class="checkbox checkbox_tick_positive"></span><span>Monaco</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Strasbourg" value="17" /><span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Toulouse" value="16" /><span class="checkbox checkbox_tick_positive"></span><span>Toulouse</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Auxerre" value="21" /><span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Brest" value="18" /><span class="checkbox checkbox_tick_positive"></span><span>Brest</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Metz" value="19" /><span class="checkbox checkbox_tick_positive"></span><span>Metz</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Le Havre" value="4" /><span class="checkbox checkbox_tick_positive"></span><span>Le Havre</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lorient" value="20" /><span class="checkbox checkbox_tick_positive"></span><span>Lorient</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Angers" value="23" /><span class="checkbox checkbox_tick_positive"></span><span>Angers</span></label></div>
-                        <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Paris FC" value="22" /><span class="checkbox checkbox_tick_positive"></span><span>Paris FC</span></label></div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nantes" value="15" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Nantes</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Strasbourg" value="17" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Strasbourg</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Toulouse" value="16" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Toulouse</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Brest" value="18" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Brest</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Le Havre" value="4" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Le Havre</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Auxerre" value="21" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Auxerre</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Angers" value="23" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Angers</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lorient" value="20" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lorient</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Metz" value="19" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Metz</span>
+                          </label>
+                        </div>
+                        <div class="entry__choice">
+                          <label class="checkbox__label">
+                            <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Paris FC" value="22" data-required="true" />
+                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Paris FC</span>
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <label class="entry__error entry__error--primary" style="font-size:14px;text-align:left;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
+                  <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
                 </div>
               </div>
             </div>
 
             <!-- RGPD -->
-            <div style="padding:6px 0">
-              <div class="sib-form__declaration" style="direction:ltr">
-                <div class="declaration-block-icon">
-                  <svg class="svgIcon-sphere" style="width:40px;height:40px">
-                    <use xlink:href="#svgIcon-sphere"></use>
-                  </svg>
-                </div>
-                <div style="font-size:13px;text-align:left;color:#687484">
-                  <p>Vous acceptez que les données personnelles que vous avez fournies soient transférées à Brevo pour être traitées conformément
-                    <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">à la politique de confidentialité de Brevo.</a>
-                  </p>
+            <div style="padding:8px 0">
+              <div class="sib-optin sib-form-block" data-required="true">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <div class="entry__choice" style="">
+                      <label>
+                        <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN" required />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span style="font-size:19px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">
+                          <p>J'accepte de recevoir vos emails. Désabonnement en 1 clic. <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">Politique de confidentialité de Brevo</a> 🔒</p>
+                          <span data-required="*" style="display:inline;" class="entry__label entry__label_optin"></span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
                 </div>
               </div>
             </div>
 
-            <!-- CTA -->
-            <div style="padding:6px 0">
+            <!-- CTA avec protection anti-overlay -->
+            <div style="padding:8px 0">
               <div class="sib-form-block" style="text-align:left">
-                <button class="sib-form-block__button sib-form-block__button-with-loader"
-                        style="font-size:18px;font-weight:700;color:#fff;background-color:#0c67f6;border-radius:6px;border:0"
-                        type="submit" id="cta-submit">
-                  S'INSCRIRE
+                <button class="sib-form-block__button sib-form-block__button-with-loader" 
+                        style="font-size:25px;text-align:center;font-weight:700;font-family:Helvetica,sans-serif;color:#FFFFFF;background-color:#0c67f6;border-radius:3px;border-width:0px;"
+                        form="sib-form" 
+                        type="submit"
+                        id="cta-submit">
+                  RECEVOIR MON ANALYSE
                 </button>
               </div>
             </div>
 
-            <!-- champs techniques -->
+            <!-- reCAPTCHA v3 -->
+            <div style="padding:8px 0">
+              <div class="g-recaptcha-v3" data-sitekey="6LcN-9QrAAAAADuu2DsGlnzLZaAHqBje2LUJnzJC" style="display:none"></div>
+            </div>
+
+            <!-- Champs techniques -->
             <input type="text" name="email_address_check" value="" class="input--hidden">
             <input type="hidden" name="locale" value="fr">
             <!-- UTM cachés -->
-            <input type="hidden" name="utm_source"  id="utm_source">
-            <input type="hidden" name="utm_medium"  id="utm_medium">
+            <input type="hidden" name="utm_source" id="utm_source">
+            <input type="hidden" name="utm_medium" id="utm_medium">
             <input type="hidden" name="utm_campaign" id="utm_campaign">
             <input type="hidden" name="utm_content" id="utm_content">
           </form>
@@ -224,13 +333,18 @@
     window.REQUIRED_ERROR_MESSAGE = "Vous devez renseigner ce champ.";
     window.GENERIC_INVALID_MESSAGE = window.EMAIL_INVALID_MESSAGE;
     window.REQUIRED_MULTISELECT_MESSAGE = 'Veuillez choisir au moins une option';
-    window.translation = { common:{ selectedList:'{quantity} liste sélectionnée', selectedLists:'{quantity} listes sélectionnées', selectedOption:'{quantity} sélectionné', selectedOptions:'{quantity} sélectionnés' } };
+    window.translation = { 
+      common: { 
+        selectedList: '{quantity} liste sélectionnée', 
+        selectedLists: '{quantity} listes sélectionnées', 
+        selectedOption: '{quantity} sélectionné', 
+        selectedOptions: '{quantity} sélectionnés' 
+      } 
+    };
     var AUTOHIDE = Boolean(0);
   </script>
-  <!-- Script Brevo désactivé (plante au submit) -->
-  <!-- <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script> -->
 
-  <!-- UTM + Voir plus + Soumission via iFrame -->
+  <!-- Script principal avec UTM + Voir plus + Soumission -->
   <script>
     function readCookie(name){
       return document.cookie.split('; ').reduce((acc, c)=>{
@@ -239,13 +353,24 @@
         return acc;
       }, '');
     }
+    
     function getParam(name){
       const u = new URL(location.href);
       return u.searchParams.get(name) || readCookie(name) || '';
     }
-    function setHidden(id, val){ const el=document.getElementById(id); if(el) el.value = val || ''; }
-    function okEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); }
-    function oneClub(form){ return Array.from(form.querySelectorAll('input[name="lists_25[]"]')).some(c=>c.checked); }
+    
+    function setHidden(id, val){ 
+      const el=document.getElementById(id); 
+      if(el) el.value = val || ''; 
+    }
+    
+    function okEmail(v){ 
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); 
+    }
+    
+    function oneClub(form){ 
+      return Array.from(form.querySelectorAll('input[name="lists_25[]"]')).some(c=>c.checked); 
+    }
 
     document.addEventListener('DOMContentLoaded', ()=>{
       // UTM -> hidden
@@ -260,7 +385,7 @@
       setHidden('utm_campaign',utm.campaign);
       setHidden('utm_content', utm.content);
 
-      // Voir plus
+      // Bouton Voir plus
       const btn  = document.getElementById('toggle-more');
       const more = document.getElementById('more-clubs');
       if (btn && more) {
@@ -285,7 +410,7 @@
       frame.addEventListener('load', ()=>{
         // Ignore le premier load (page blanche initiale)
         if (!armed) return;
-        // On considère la soumission réussie (on ne lit pas le contenu cross-origin)
+        // On considère la soumission réussie
         if (success){
           success.style.display = 'block';
           success.textContent = 'Inscription confirmée !';
@@ -310,15 +435,21 @@
       form.addEventListener('submit', (e)=>{
         // Validation minimale côté client
         const email = emailEl ? emailEl.value : '';
-        if (!okEmail(email) || !oneClub(form)) {
+        const optIn = document.getElementById('OPT_IN');
+        
+        if (!okEmail(email) || !oneClub(form) || !optIn.checked) {
           e.preventDefault();
           if (error){
             error.style.display = 'block';
-            error.textContent = !okEmail(email)
-              ? 'Veuillez saisir un email valide.'
-              : 'Veuillez choisir au moins un club.';
+            if (!okEmail(email)) {
+              error.textContent = 'Veuillez saisir un email valide.';
+              if (emailEl) emailEl.focus();
+            } else if (!oneClub(form)) {
+              error.textContent = 'Veuillez choisir au moins un club.';
+            } else if (!optIn.checked) {
+              error.textContent = 'Veuillez accepter de recevoir nos emails.';
+            }
           }
-          if (emailEl && !okEmail(email)) emailEl.focus();
           return;
         }
         // Nettoie les panneaux et arme le handler iFrame
@@ -328,5 +459,9 @@
       });
     });
   </script>
+
+  <!-- Scripts Brevo -->
+  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+  <script src="https://www.google.com/recaptcha/api.js?render=6LcN-9QrAAAAADuu2DsGlnzLZaAHqBje2LUJnzJC&hl=fr" async defer></script>
 </body>
 </html>
