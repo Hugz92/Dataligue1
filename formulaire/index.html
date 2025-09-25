@@ -41,7 +41,7 @@
   <!-- Styles Brevo -->
   <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 
-  <!-- Patch responsive + style (Gratuit) -->
+  <!-- Patch responsive + styles -->
   <style>
     body { margin: 0; background: #c8dbf6; }
     .sib-form { text-align: center; background-color: #c8dbf6; }
@@ -52,6 +52,9 @@
     }
     .sib-form-block__button { cursor: pointer; }
     .tag-free { font-size:0.7em; font-weight:600; color:#3C4858; } /* Taille réduite pour (Gratuit) */
+
+    /* Force le gras partout (PC & mobile) */
+    .force-bold { font-weight: 800 !important; }
 
     @media (max-width: 600px) {
       .sib-form { padding: 0 16px; }
@@ -119,7 +122,7 @@
                   <label class="entry__label"
                          for="EMAIL"
                          style="font-weight:700; font-size:16px; font-family:Helvetica, sans-serif; color:#3c4858;"
-                         data-required="*">ENTREZ VOTRE EMAIL</label>
+                         data-required="*"><span class="force-bold">ENTREZ VOTRE EMAIL</span></label>
                   <div class="entry__field">
                     <input class="input" type="email" id="EMAIL" name="EMAIL" autocomplete="email"
                            placeholder="votre@email.com" data-required="true" required>
@@ -138,7 +141,7 @@
                 <div class="form__label-row">
                   <label id="clubs-label" class="entry__label"
                          style="font-weight:700; font-size:16px; font-family:Helvetica, sans-serif; color:#3c4858;"
-                         data-required="*">Choisissez votre CLUB et recevez l’analyse DATA après chaque journée (plusieurs choix possibles)</label>
+                         data-required="*"><span class="force-bold">Choisissez votre CLUB et recevez l’analyse DATA après chaque journée (plusieurs choix possibles)</span></label>
 
                   <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="23" data-value="Angers" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Angers</span></label></div>
                   <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="21" data-value="Auxerre" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span></label></div>
@@ -174,7 +177,7 @@
                     <label>
                       <input type="checkbox" class="input_replaced" id="OPT_IN" name="OPT_IN" value="1" required>
                       <span class="checkbox checkbox_tick_positive"></span>
-                      <span style="font-size:19px; font-weight:700; font-family:Helvetica, sans-serif; color:#3C4858;">
+                      <span class="force-bold" style="font-size:19px; font-family:Helvetica, sans-serif; color:#3C4858;">
                         J’accepte de recevoir vos emails. Désabonnement en 1 clic.
                         <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank" rel="noopener">Politique de confidentialité de Brevo</a> 🔒
                         <span data-required="*" class="entry__label entry__label_optin" style="display:inline;"></span>
