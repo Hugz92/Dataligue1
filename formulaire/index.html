@@ -29,16 +29,18 @@
     #sib-container input::placeholder, #sib-container textarea::placeholder {text-align:left;font-family:Helvetica,sans-serif;color:#c0ccda}
     #sib-container a{text-decoration:underline;color:#2BB2FC}
   </style>
-  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+  <!-- Suppression du CSS externe qui cause les erreurs CORS -->
+  <!-- <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css"> -->
 
   <!-- Styles -->
   <style>
     :root{ --blue:#0c67f6; --ink:#3C4858; }
     html,body{ margin:0; padding:0; background:var(--blue); font-family:Helvetica,Arial,sans-serif }
     .wrap{ max-width:620px; margin:0px auto 24px; padding:0 10px }
+    .sib-form{ background-color:#c8dbf6 !important; }
     .sib-form .entry__label{ color:var(--ink) !important; }
     .sib-form .entry__choice span{ color:var(--ink) !important; font-size:18px !important; }
-    .sib-form .sib-form-block p{ color:#0c67f6 !important; }
+    .sib-form .sib-form-block p{ color:#3C4858 !important; margin:0; }
     .sib-form-block__button{ width:100%; padding:.85rem 1rem }
 
     /* Voir plus */
@@ -78,9 +80,34 @@
 
     /* iFrame caché */
     #sibframe{ width:0;height:0;border:0; position:absolute; left:-9999px; }
-
-    /* Background */
-    .sib-form{ background-color:#c8dbf6 !important; }
+    
+    /* Styles des checkboxes */
+    .entry__choice { margin: 8px 0; text-align: left; }
+    .checkbox__label { display: flex; align-items: center; cursor: pointer; }
+    .checkbox { 
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #c0ccda;
+      border-radius: 3px;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    .input_replaced { display: none; }
+    .input_replaced:checked + .checkbox {
+      background-color: #0c67f6;
+      border-color: #0c67f6;
+      position: relative;
+    }
+    .input_replaced:checked + .checkbox::after {
+      content: '✓';
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -88,17 +115,9 @@
     <!-- ====== FORMULAIRE BREVO ====== -->
     <div class="sib-form" style="text-align:center;background-color:#c8dbf6;">
       <div id="sib-form-container" class="sib-form-container">
-        <div id="error-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;display:none">
-          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-            <span class="sib-form-message-panel__inner-text">Nous n'avons pas pu confirmer votre inscription.</span>
-          </div>
-        </div>
+        <div id="error-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;max-width:540px;display:none;padding:10px;margin-bottom:10px"></div>
         
-        <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;display:none">
-          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
-            <span class="sib-form-message-panel__inner-text">Votre inscription est confirmée.</span>
-          </div>
-        </div>
+        <div id="success-message" class="sib-form-message-panel" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#085229;background-color:#e7faf0;border-radius:3px;border-color:#13ce66;max-width:540px;display:none;padding:10px;margin-bottom:10px"></div>
 
         <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center;background-color:rgba(255,255,255,1);max-width:540px;border-radius:3px;border-width:1px;border-color:#C0CCD9;border-style:solid;direction:ltr">
           <form id="sib-form" method="POST"
@@ -126,7 +145,7 @@
                   <div class="form__label-row">
                     <label class="entry__label" style="font-weight:700;text-align:left;font-size:16px;color:#3c4858" for="EMAIL" data-required="*">ENTREZ VOTRE EMAIL</label>
                     <div class="entry__field">
-                      <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="votre@email.com" data-required="true" required />
+                      <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="votre@email.com" data-required="true" required style="padding:8px;width:100%;border:1px solid #c0ccda;border-radius:3px;font-size:16px" />
                     </div>
                   </div>
                   <label class="entry__error entry__error--primary" style="font-size:16px;text-align:left;font-family:Helvetica,sans-serif;color:#661d1d;background-color:#ffeded;border-radius:3px;border-color:#ff4949;"></label>
@@ -143,54 +162,54 @@
                       Choisissez votre CLUB et recevez l'analyse DATA après chaque journée (plusieurs choix possibles)
                     </label>
                     
-                    <div style="">
+                    <div style="margin-top:10px">
                       <!-- Clubs visibles (les plus populaires) -->
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="PSG" value="3" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">PSG</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>PSG</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Marseille" value="24" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Marseille</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Marseille</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lyon" value="9" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lyon</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Lyon</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lens" value="13" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lens</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Lens</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lille" value="11" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lille</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Lille</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Monaco" value="10" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Monaco</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Monaco</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nice" value="12" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Nice</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Nice</span>
                         </label>
                       </div>
                       <div class="entry__choice">
                         <label class="checkbox__label">
                           <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Rennes" value="14" data-required="true" />
-                          <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Rennes</span>
+                          <span class="checkbox checkbox_tick_positive"></span><span>Rennes</span>
                         </label>
                       </div>
 
@@ -202,61 +221,61 @@
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Nantes" value="15" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Nantes</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Nantes</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Strasbourg" value="17" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Strasbourg</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Toulouse" value="16" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Toulouse</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Toulouse</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Brest" value="18" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Brest</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Brest</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Le Havre" value="4" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Le Havre</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Le Havre</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Auxerre" value="21" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Auxerre</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Angers" value="23" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Angers</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Angers</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Lorient" value="20" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Lorient</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Lorient</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Metz" value="19" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Metz</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Metz</span>
                           </label>
                         </div>
                         <div class="entry__choice">
                           <label class="checkbox__label">
                             <input type="checkbox" class="input_replaced" name="lists_25[]" data-value="Paris FC" value="22" data-required="true" />
-                            <span class="checkbox checkbox_tick_positive"></span><span style="font-size:18px;text-align:left;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">Paris FC</span>
+                            <span class="checkbox checkbox_tick_positive"></span><span>Paris FC</span>
                           </label>
                         </div>
                       </div>
@@ -267,18 +286,17 @@
               </div>
             </div>
 
-            <!-- RGPD -->
+            <!-- RGPD OBLIGATOIRE -->
             <div style="padding:8px 0">
               <div class="sib-optin sib-form-block" data-required="true">
                 <div class="form__entry entry_mcq">
                   <div class="form__label-row">
                     <div class="entry__choice" style="">
-                      <label>
+                      <label class="checkbox__label">
                         <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN" required />
                         <span class="checkbox checkbox_tick_positive"></span>
-                        <span style="font-size:19px;text-align:left;font-weight:700;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">
-                          <p>J'accepte de recevoir vos emails. Désabonnement en 1 clic. <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">Politique de confidentialité de Brevo</a> 🔒</p>
-                          <span data-required="*" style="display:inline;" class="entry__label entry__label_optin"></span>
+                        <span style="font-size:16px;text-align:left;font-weight:600;font-family:Helvetica,sans-serif;color:#3C4858;background-color:transparent;">
+                          J'accepte de recevoir vos emails. Désabonnement en 1 clic. <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank">Politique de confidentialité de Brevo</a> 🔒
                         </span>
                       </label>
                     </div>
@@ -292,7 +310,7 @@
             <div style="padding:8px 0">
               <div class="sib-form-block" style="text-align:left">
                 <button class="sib-form-block__button sib-form-block__button-with-loader" 
-                        style="font-size:25px;text-align:center;font-weight:700;font-family:Helvetica,sans-serif;color:#FFFFFF;background-color:#0c67f6;border-radius:3px;border-width:0px;"
+                        style="font-size:25px;text-align:center;font-weight:700;font-family:Helvetica,sans-serif;color:#FFFFFF;background-color:#0c67f6;border-radius:3px;border-width:0px;width:100%;cursor:pointer"
                         form="sib-form" 
                         type="submit"
                         id="cta-submit">
@@ -301,7 +319,7 @@
               </div>
             </div>
 
-            <!-- reCAPTCHA v3 -->
+            <!-- reCAPTCHA v3 invisible -->
             <div style="padding:8px 0">
               <div class="g-recaptcha-v3" data-sitekey="6LcN-9QrAAAAADuu2DsGlnzLZaAHqBje2LUJnzJC" style="display:none"></div>
             </div>
@@ -400,6 +418,7 @@
       const success = document.getElementById('success-message');
       const error   = document.getElementById('error-message');
       const emailEl = document.getElementById('EMAIL');
+      const optIn   = document.getElementById('OPT_IN');
       const frame   = document.getElementById('sibframe');
 
       if (!form || !frame) return;
@@ -435,23 +454,36 @@
       form.addEventListener('submit', (e)=>{
         // Validation minimale côté client
         const email = emailEl ? emailEl.value : '';
-        const optIn = document.getElementById('OPT_IN');
         
-        if (!okEmail(email) || !oneClub(form) || !optIn.checked) {
+        // Vérifications
+        if (!okEmail(email)) {
           e.preventDefault();
           if (error){
             error.style.display = 'block';
-            if (!okEmail(email)) {
-              error.textContent = 'Veuillez saisir un email valide.';
-              if (emailEl) emailEl.focus();
-            } else if (!oneClub(form)) {
-              error.textContent = 'Veuillez choisir au moins un club.';
-            } else if (!optIn.checked) {
-              error.textContent = 'Veuillez accepter de recevoir nos emails.';
-            }
+            error.textContent = 'Veuillez saisir un email valide.';
+          }
+          if (emailEl) emailEl.focus();
+          return;
+        }
+        
+        if (!oneClub(form)) {
+          e.preventDefault();
+          if (error){
+            error.style.display = 'block';
+            error.textContent = 'Veuillez choisir au moins un club.';
           }
           return;
         }
+        
+        if (optIn && !optIn.checked) {
+          e.preventDefault();
+          if (error){
+            error.style.display = 'block';
+            error.textContent = 'Veuillez accepter de recevoir nos emails.';
+          }
+          return;
+        }
+        
         // Nettoie les panneaux et arme le handler iFrame
         if (error){ error.style.display='none'; error.textContent=''; }
         if (success){ success.style.display='none'; success.textContent=''; }
@@ -460,8 +492,10 @@
     });
   </script>
 
-  <!-- Scripts Brevo -->
-  <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+  <!-- Scripts Brevo - Script principal commenté pour éviter les conflits -->
+  <!-- <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script> -->
+  
+  <!-- reCAPTCHA v3 -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LcN-9QrAAAAADuu2DsGlnzLZaAHqBje2LUJnzJC&hl=fr" async defer></script>
 </body>
 </html>
