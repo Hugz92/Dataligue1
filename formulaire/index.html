@@ -56,10 +56,21 @@
     /* Force le gras partout (PC & mobile) */
     .force-bold { font-weight: 800 !important; }
 
+    /* Bouton Voir + (style léger) */
+    .show-more-btn {
+      margin: 8px 0 0 0; padding: 8px 12px; border: 1px solid #cdd7e1; border-radius: 6px;
+      background: #f3f6fb; font-family: Helvetica, sans-serif; font-size: 14px; cursor: pointer;
+    }
+    .show-more-btn:focus { outline: 2px solid #0c67f6; outline-offset: 2px; }
+
+    /* Contenu masqué initialement */
+    .more-clubs { display: none; }
+
     @media (max-width: 600px) {
       .sib-form { padding: 0 16px; }
       .sib-form-block__button { width:100% !important; display:block; }
       .entry__label, .checkbox__label span { font-size:16px !important; line-height:1.35; }
+      .show-more-btn { width: 100%; }
     }
   </style>
 </head>
@@ -134,7 +145,7 @@
             </div>
           </div>
 
-          <!-- Clubs -->
+          <!-- Clubs (pop → moins pop) + Voir + après 8 clubs -->
           <div style="padding: 8px 0;">
             <div class="sib-checkbox-group sib-form-block" data-required="true" aria-labelledby="clubs-label">
               <div class="form__entry entry_mcq">
@@ -143,25 +154,36 @@
                          style="font-weight:700; font-size:16px; font-family:Helvetica, sans-serif; color:#3c4858;"
                          data-required="*"><span class="force-bold">Choisissez votre CLUB et recevez l’analyse DATA après chaque journée (plusieurs choix possibles)</span></label>
 
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="23" data-value="Angers" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Angers</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="21" data-value="Auxerre" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="18" data-value="Brest" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Brest</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="4" data-value="Le Havre" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Le Havre</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="13" data-value="Lens" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lens</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="11" data-value="Lille" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lille</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="20" data-value="Lorient" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lorient</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="9" data-value="Lyon" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lyon</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="24" data-value="Marseille" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Marseille</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="19" data-value="Metz" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Metz</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="10" data-value="Monaco" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Monaco</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="15" data-value="Nantes" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Nantes</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="12" data-value="Nice" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Nice</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="22" data-value="Paris FC" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Paris FC</span></label></div>
+                  <!-- TOP 8 (les plus populaires) -->
                   <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="3" data-value="PSG" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>PSG</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="24" data-value="Marseille" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Marseille</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="9" data-value="Lyon" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lyon</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="10" data-value="Monaco" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Monaco</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="11" data-value="Lille" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lille</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="13" data-value="Lens" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lens</span></label></div>
                   <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="14" data-value="Rennes" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Rennes</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="17" data-value="Strasbourg" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span></label></div>
-                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="16" data-value="Toulouse" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Toulouse</span></label></div>
+                  <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="12" data-value="Nice" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Nice</span></label></div>
+
+                  <!-- Bouton Voir + -->
+                  <button type="button" id="show-more-clubs" class="show-more-btn" aria-expanded="false" aria-controls="more-clubs">
+                    Voir +
+                  </button>
+
+                  <!-- Liste étendue (masquée par défaut) -->
+                  <div id="more-clubs" class="more-clubs" role="region" aria-label="Plus de clubs">
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="15" data-value="Nantes" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Nantes</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="16" data-value="Toulouse" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Toulouse</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="17" data-value="Strasbourg" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Strasbourg</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="18" data-value="Brest" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Brest</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="19" data-value="Metz" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Metz</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="20" data-value="Lorient" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Lorient</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="21" data-value="Auxerre" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Auxerre</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="23" data-value="Angers" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Angers</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="4" data-value="Le Havre" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Le Havre</span></label></div>
+                    <div class="entry__choice"><label class="checkbox__label"><input type="checkbox" class="input_replaced" name="lists_25[]" value="22" data-value="Paris FC" data-required="true"><span class="checkbox checkbox_tick_positive"></span><span>Paris FC</span></label></div>
+                  </div>
                 </div>
+
                 <label class="entry__error entry__error--primary"
                        style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;"></label>
               </div>
@@ -240,6 +262,22 @@
 
   <!-- JS Brevo -->
   <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+  <!-- Script Voir + (déplie définitivement, sans retour) -->
+  <script>
+    (function() {
+      var btn = document.getElementById('show-more-clubs');
+      var more = document.getElementById('more-clubs');
+      if (btn && more) {
+        btn.addEventListener('click', function () {
+          more.style.display = 'block';      // Affiche la suite
+          btn.setAttribute('aria-expanded', 'true');
+          btn.style.display = 'none';        // Cache le bouton (pas de "Voir -")
+        });
+      }
+    })();
+  </script>
+
   <!-- reCAPTCHA v3 -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LcN-9QrAAAAADuu2DsGlnzLZaAHqBje2LUJnzJC&hl=fr" async defer></script>
 </body>
