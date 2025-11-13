@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison Visuelle - Ancien vs Moderne 2.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 42px;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            margin-bottom: 60px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .version-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .version-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .version-card.old .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .version-card.new .version-badge {
+            background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+            color: white;
+        }
+
+        .version-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .version-desc {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .version-card.old .feature-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .version-card.new .feature-icon {
+            background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-label {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .feature-desc {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Preview boxes */
+        .preview-section {
+            margin-top: 32px;
+        }
+
+        .preview-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            border: 2px solid rgba(0,0,0,0.1);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .color-swatch:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Sample component previews */
+        .component-preview {
+            margin-top: 16px;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #f0f0f0;
+        }
+
+        .old .component-preview {
+            background: linear-gradient(135deg, #0C1224 0%, #0C1220 100%);
+        }
+
+        .new .component-preview {
+            background: #0A0E1A;
+        }
+
+        .sample-header {
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .old .sample-header {
+            background: linear-gradient(135deg, #0E1220 0%, #11162A 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .new .sample-header {
+            background: #131829;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sample-header-text {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .old .sample-header-text {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .new .sample-header-text {
+            color: #F8FAFC;
+        }
+
+        .sample-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .old .sample-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+        }
+
+        .new .sample-badge {
+            background: #3B82F6;
+            color: white;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cta-section {
+            text-align: center;
+            background: white;
+            padding: 48px 32px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .cta-desc {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(59,130,246,0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 12px 32px rgba(59,130,246,0.5);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3B82F6;
+            border: 2px solid #3B82F6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Comparaison Visuelle</h1>
+        <p class="subtitle">Newsletter Dataligue 1 : Jessica Walsh vs Moderne 2.0</p>
+
+        <div class="comparison-grid">
+            <!-- Ancienne Version -->
+            <div class="version-card old">
+                <div class="version-header">
+                    <div class="version-badge">Ancienne Version</div>
+                    <h2 class="version-title">Jessica Walsh Style</h2>
+                    <p class="version-desc">Design pop art avec gradients arc-en-ciel et formes géométriques audacieuses</p>
+                </div>
+
+                <ul class="features-list">
+                    <li>
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Palette Colorée</div>
+                            <div class="feature-desc">Gradients violents : #667eea → #764ba2 → #ff6b6b</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">✨</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Effets Visuels</div>
+                            <div class="feature-desc">Ombres colorées, multi-gradients, formes géométriques</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">📐</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Layout Maximaliste</div>
+                            <div class="feature-desc">Disques radiaux, rubans obliques, rayures</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🔤</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Typographie</div>
+                            <div class="feature-desc">Barlow Condensed, text-shadow multicolore</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="preview-section">
+                    <div class="preview-label">Palette de couleurs</div>
+                    <div class="color-palette">
+                        <div class="color-swatch" style="background: #667eea;">
+                            <span class="tooltip">#667eea</span>
+                        </div>
+                        <div class="color-swatch" style="background: #764ba2;">
+                            <span class="tooltip">#764ba2</span>
+                        </div>
+                        <div class="color-swatch" style="background: #ff6b6b;">
+                            <span class="tooltip">#ff6b6b</span>
+                        </div>
+                        <div class="color-swatch" style="background: #22d3ee;">
+                            <span class="tooltip">#22d3ee</span>
+                        </div>
+                        <div class="color-swatch" style="background: #a78bfa;">
+                            <span class="tooltip">#a78bfa</span>
+                        </div>
+                        <div class="color-swatch" style="background: #0C1224;">
+                            <span class="tooltip">#0C1224</span>
+                        </div>
+                    </div>
+
+                    <div class="component-preview">
+                        <div class="sample-header">
+                            <div class="sample-header-text">ANALYSE DATA LIGUE 1</div>
+                        </div>
+                        <center>
+                            <span class="sample-badge">NEWSLETTER MATCH</span>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nouvelle Version -->
+            <div class="version-card new">
+                <div class="version-header">
+                    <div class="version-badge">Nouvelle Version</div>
+                    <h2 class="version-title">Moderne 2.0</h2>
+                    <p class="version-desc">Design épuré avec glassmorphism, ombres douces et palette dark sophistiquée</p>
+                </div>
+
+                <ul class="features-list">
+                    <li>
+                        <div class="feature-icon">🌙</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Dark Mode Élégant</div>
+                            <div class="feature-desc">Fond #0A0E1A, surfaces #131829, bordures rgba subtiles</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">💎</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Glassmorphism</div>
+                            <div class="feature-desc">Surfaces semi-transparentes, ombres réalistes, effets de profondeur</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-text">
+                            <div class="feature-label">Minimalisme Fonctionnel</div>
+                            <div class="feature-desc">Spacing généreux (24px), hiérarchie claire, moins de décoration</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon">🔠</div>
+                        <div class="feature-text">
+                            <div class="feature-label">System Fonts</div>
+                            <div class="feature-desc">-apple-system, Segoe UI, contraste amélioré</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="preview-section">
+                    <div class="preview-label">Palette de couleurs</div>
+                    <div class="color-palette">
+                        <div class="color-swatch" style="background: #3B82F6;">
+                            <span class="tooltip">#3B82F6</span>
+                        </div>
+                        <div class="color-swatch" style="background: #06B6D4;">
+                            <span class="tooltip">#06B6D4</span>
+                        </div>
+                        <div class="color-swatch" style="background: #10B981;">
+                            <span class="tooltip">#10B981</span>
+                        </div>
+                        <div class="color-swatch" style="background: #F59E0B;">
+                            <span class="tooltip">#F59E0B</span>
+                        </div>
+                        <div class="color-swatch" style="background: #EF4444;">
+                            <span class="tooltip">#EF4444</span>
+                        </div>
+                        <div class="color-swatch" style="background: #0A0E1A;">
+                            <span class="tooltip">#0A0E1A</span>
+                        </div>
+                    </div>
+
+                    <div class="component-preview">
+                        <div class="sample-header">
+                            <div class="sample-header-text">ANALYSE DATA LIGUE 1</div>
+                        </div>
+                        <center>
+                            <span class="sample-badge">NEWSLETTER MATCH</span>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2 class="cta-title">Choisissez Votre Style</h2>
+            <p class="cta-desc">
+                Les deux versions sont fonctionnelles et prêtes à l'emploi.
+                Utilisez <strong>json_to_brevo_intro_modern.py</strong> pour le nouveau style,
+                ou gardez l'ancien script pour le style Jessica Walsh.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">✨ Utiliser Moderne 2.0</a>
+                <a href="#" class="btn btn-secondary">📖 Voir la Documentation</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
